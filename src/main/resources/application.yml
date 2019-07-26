@@ -3,3 +3,8 @@ server:
 smallking:
   title: Hello
   name: smallking
+
+spring:
+  datasource:
+    type: com.alibaba.druid.pool.DruidDataSource
+    driver-class-name: org.postgresql.Driver
