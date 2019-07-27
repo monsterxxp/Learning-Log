@@ -11,6 +11,12 @@ import org.springframework.web.bind.annotation.RestController;
 
 import java.lang.reflect.Method;
 
+/**
+ * 程序入口启动类
+ *
+ * @author smallking
+ * @date 2019/7/27
+ */
 @SpringBootApplication
 @RestController
 public class LearnApplication {
