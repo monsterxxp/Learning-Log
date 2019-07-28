@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 
 /**
  * @program: learn
@@ -37,5 +38,23 @@ public class SysUserServiceImpl implements ISysUserService {
     @Override
     public List<SysUser> findAllByJPA() {
         return sysUserRepository.findAll();
+    }
+
+    @Override
+    public SysUser create() {
+        SysUser user = new SysUser();
+        user.setAccount("123");
+        user.setName("12312");
+        user.setPassword("1123");
+        SysUser sysUser = sysUserRepository.saveAndFlush(user);
+        return sysUser;
+    }
+
+    @Override
+    public SysUser update(String id) {
+        SysUser user = sysUserRepository.findById(id).get();
+        user.setName("321");
+        SysUser result = sysUserRepository.saveAndFlush(user);
+        return result;
     }
 }

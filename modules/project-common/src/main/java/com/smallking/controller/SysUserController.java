@@ -3,10 +3,7 @@ package com.smallking.controller;
 import com.smallking.model.SysUser;
 import com.smallking.service.ISysUserService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.Map;
@@ -31,5 +28,15 @@ public class SysUserController {
     @GetMapping(value = "/findAll")
     public List<SysUser> findAll() {
         return sysUserService.findAll();
+    }
+
+    @GetMapping(value = "/create")
+    public SysUser create() {
+        return sysUserService.create();
+    }
+
+    @GetMapping(value = "/update")
+    public SysUser update(String id) {
+        return sysUserService.update(id);
     }
 }

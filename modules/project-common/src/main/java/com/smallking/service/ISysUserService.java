@@ -31,4 +31,23 @@ public interface ISysUserService {
      * @Date: 2019-07-27
      */
     List<SysUser> findAllByJPA();
+
+    /**
+     * 新增用户
+     * @param
+     * @return: {@link {@link SysUser}}
+     * @throws
+     * @Author: smallking
+     * @Date: 2019-07-27
+     */
+    SysUser create();
+    /**
+     * 修改用户
+     * @param
+     * @return: {@link {@link SysUser}}
+     * @throws
+     * @Author: smallking
+     * @Date: 2019-07-27
+     */
+    SysUser update(String id);
 }

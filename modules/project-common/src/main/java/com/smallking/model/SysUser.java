@@ -1,10 +1,15 @@
 package com.smallking.model;
 
+import com.smallking.common.BaseModel;
+import com.smallking.listener.CreateListenable;
+import com.smallking.listener.UpdateListenable;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
 import java.io.Serializable;
+import java.util.Date;
 
 /**
  * @program: learn
@@ -14,12 +19,8 @@ import java.io.Serializable;
  **/
 @Entity
 @Table(name = "sys_user")
-public class SysUser implements Serializable{
+public class SysUser extends BaseModel implements CreateListenable, UpdateListenable {
 
-    private static final long serialVersionUID = -4806761471282761282L;
-
-    @Id
-    private String id;
 
     @Column(name = "name", columnDefinition = "VARCHAR")
     private String name;
@@ -30,13 +31,11 @@ public class SysUser implements Serializable{
     @Column(name = "password", columnDefinition = "VARCHAR")
     private String password;
 
-    public String getId() {
-        return id;
-    }
+    @Column(name = "create_time", columnDefinition = "TIMESTAMP")
+    private Date createTime;
 
-    public void setId(String id) {
-        this.id = id;
-    }
+    @Column(name = "update_time", columnDefinition = "TIMESTAMP")
+    private Date updateTime;
 
     public String getName() {
         return name;
@@ -60,5 +59,25 @@ public class SysUser implements Serializable{
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    @Override
+    public Date getCreateTime() {
+        return createTime;
+    }
+
+    @Override
+    public void setCreateTime(Date createTime) {
+        this.createTime = createTime;
+    }
+
+    @Override
+    public Date getUpdateTime() {
+        return updateTime;
+    }
+
+    @Override
+    public void setUpdateTime(Date updateTime) {
+        this.updateTime = updateTime;
     }
 }
