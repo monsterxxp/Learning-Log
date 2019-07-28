@@ -23,33 +23,13 @@ public class SysUserController {
     @Autowired
     private ISysUserService sysUserService;
 
+    @GetMapping(value = "/findAllByJPA")
+    public List<SysUser> findAllByJPA() {
+        return sysUserService.findAllByJPA();
+    }
+
     @GetMapping(value = "/findAll")
     public List<SysUser> findAll() {
         return sysUserService.findAll();
-    }
-
-    @GetMapping(value = "/findAllByTemplate")
-    public List<Map<String, Object>> findAllByTemplate() {
-        return sysUserService.findAllByJdbcTemplate();
-    }
-
-    @GetMapping(value = "/findAllByJpa")
-    public List<SysUser> findAllByJpa() {
-        return sysUserService.findAllByJpa();
-    }
-
-    @GetMapping(value = "/findAllByMysql")
-    public List<SysUser> findAllByMysql() {
-        return sysUserService.findAllByMysql();
-    }
-
-    @PostMapping(value = "/create")
-    public SysUser create() {
-        return sysUserService.create();
-    }
-
-    @GetMapping(value = "/findById/{id}")
-    public SysUser findById(@PathVariable("id") String id){
-        return sysUserService.findById(id);
     }
 }

@@ -1,4 +1,4 @@
-package com.smallking.service.impl.postgresqlrepository;
+package com.smallking.service.impl.repository;
 
 import com.smallking.model.SysUser;
 import org.springframework.data.jpa.repository.JpaRepository;

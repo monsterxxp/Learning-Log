@@ -5,18 +5,11 @@ smallking:
 spring:
   datasource:
     druid:
-      postgresql:
-        type: com.alibaba.druid.pool.DruidDataSource
-        driver-class-name: org.postgresql.Driver
-        url: jdbc:postgresql://localhost:5432/postgres
-        username: postgres
-        password: 888888
-      mysql:
-        type: com.alibaba.druid.pool.DruidDataSource
-        driver-class-name: com.mysql.jdbc.Driver
-        url: jdbc:mysql://localhost:3306/smallking?useUnicode=true&characterEncoding=UTF-8&useSSL=false
-        username: root
-        password: 888888
+      type: com.alibaba.druid.pool.DruidDataSource
+      driver-class-name: org.postgresql.Driver
+      url: jdbc:postgresql://localhost:5432/postgres
+      username: postgres
+      password: 888888
       # 连接池配置
       initial-size: 5
       min-idle: 5
@@ -76,3 +69,10 @@ spring:
 #        dialect: org.hibernate.dialect.PostgreSQLDialect
         temp:
           use_jdbc_metadata_defaults: false
+mybatis:
+  # type-aliases扫描路径
+  # type-aliases-package:
+  # mapper xml实现扫描路径
+  mapper-locations: classpath:mapper/*.xml
+  property:
+    order: BEFORE

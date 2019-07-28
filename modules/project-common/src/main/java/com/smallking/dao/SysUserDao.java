@@ -25,7 +25,6 @@ public interface SysUserDao {
      * @Author: smallking
      * @Date: 2019-07-27
      */
-    @Select("SELECT * FROM sys_user")
     List<SysUser> findAll();
 
     @Select("SELECT * FROM sys_user WHERE id=#{id}")
