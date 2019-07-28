@@ -20,7 +20,7 @@
     </properties>
 
     <modules>
-        <module>modules/common</module>
+        <module>modules/project-common</module>
         <module>modules/test</module>
     </modules>
 
@@ -80,7 +80,7 @@
         <dependencies>
             <dependency>
                 <groupId>com.smallking</groupId>
-                <artifactId>common</artifactId>
+                <artifactId>project-common</artifactId>
                 <version>0.0.1-SNAPSHOT</version>
             </dependency>
             <dependency>
