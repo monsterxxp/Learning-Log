@@ -1,5 +1,6 @@
 package com.smallking.controller;
 
+import com.smallking.annotation.Log;
 import com.smallking.model.SysUser;
 import com.smallking.service.ISysUserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,6 +21,7 @@ public class SysUserController {
     @Autowired
     private ISysUserService sysUserService;
 
+    @Log("123")
     @GetMapping(value = "/findAllByJPA")
     public List<SysUser> findAllByJPA() {
         return sysUserService.findAllByJPA();
@@ -30,6 +32,7 @@ public class SysUserController {
         return sysUserService.findAll();
     }
 
+    @Log("123")
     @GetMapping(value = "/create")
     public SysUser create() {
         return sysUserService.create();
