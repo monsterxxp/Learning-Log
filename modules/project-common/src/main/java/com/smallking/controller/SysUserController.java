@@ -42,6 +42,8 @@ public class SysUserController {
     public SysUser update(String id) {
         return sysUserService.update(id);
     }
+
+    @Log("根据用户ID查询用户")
     @GetMapping(value = "/findById")
     public SysUser findById(String id) {
         return sysUserService.findById(id);
