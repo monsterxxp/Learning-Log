@@ -1,3 +1,5 @@
+server:
+  port: 8081
 smallking:
   title: Hello
   name: smallking

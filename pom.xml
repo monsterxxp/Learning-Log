@@ -20,6 +20,7 @@
     </properties>
 
     <modules>
+        <module>modules/project-web</module>
         <module>modules/project-common</module>
         <module>modules/test</module>
     </modules>
