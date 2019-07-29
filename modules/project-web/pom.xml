@@ -10,13 +10,27 @@
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
-    <artifactId>test</artifactId>
-    <packaging>jar</packaging>
+    <artifactId>project-web</artifactId>
+    <packaging>war</packaging>
 
     <dependencies>
         <dependency>
             <groupId>com.smallking</groupId>
             <artifactId>project-common</artifactId>
         </dependency>
+        <dependency>
+            <groupId>com.smallking</groupId>
+            <artifactId>test</artifactId>
+        </dependency>
     </dependencies>
+    <build>
+        <finalName>project-web</finalName>
+        <plugins>
+            <plugin>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-maven-plugin</artifactId>
+            </plugin>
+
+        </plugins>
+    </build>
 </project>
