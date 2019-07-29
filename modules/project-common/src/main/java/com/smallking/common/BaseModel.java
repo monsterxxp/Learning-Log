@@ -14,6 +14,7 @@ import java.io.Serializable;
  **/
 
 @EntityListeners({EntityEventListener.class})
+@MappedSuperclass
 public class BaseModel implements Serializable {
 
     private static final long serialVersionUID = 3381061073011090142L;
