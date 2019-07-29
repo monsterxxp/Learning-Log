@@ -4,12 +4,14 @@ import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Pointcut;
+import org.jboss.logging.Logger;
 import org.springframework.stereotype.Component;
 
 @Aspect
 @Component
 public class LogAspect {
 
+    private final static Logger logger = Logger.getLogger(LogAspect.class);
     @Pointcut("@annotation(com.smallking.annotation.Log)")
     public void pointcut() {}
 
@@ -27,7 +29,7 @@ public class LogAspect {
         long endTime = System.currentTimeMillis();
 
         long proceedTime = endTime - startTime;
-        System.out.println("执行时间" + proceedTime);
+        logger.info("执行时间" + proceedTime);
         return result;
     }
 }

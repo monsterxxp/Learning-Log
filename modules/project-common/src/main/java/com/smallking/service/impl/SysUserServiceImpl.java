@@ -7,7 +7,9 @@ import com.smallking.service.impl.repository.SysUserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
+import java.math.BigDecimal;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
@@ -25,9 +27,6 @@ public class SysUserServiceImpl implements ISysUserService {
     private SysUserDao sysUserDao;
 
     @Autowired
-    private JdbcTemplate jdbcTemplate;
-
-    @Autowired
     private SysUserRepository sysUserRepository;
 
     @Override
@@ -41,6 +40,7 @@ public class SysUserServiceImpl implements ISysUserService {
     }
 
     @Override
+    @Transactional
     public SysUser create() {
         SysUser user = new SysUser();
         user.setAccount("123");
@@ -56,5 +56,10 @@ public class SysUserServiceImpl implements ISysUserService {
         user.setName("321");
         SysUser result = sysUserRepository.saveAndFlush(user);
         return result;
+    }
+
+    @Override
+    public SysUser findById(String id) {
+        return sysUserRepository.findById(id).get();
     }
 }

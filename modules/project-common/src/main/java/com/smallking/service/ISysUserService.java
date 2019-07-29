@@ -50,4 +50,6 @@ public interface ISysUserService {
      * @Date: 2019-07-27
      */
     SysUser update(String id);
+
+    SysUser findById(String id);
 }

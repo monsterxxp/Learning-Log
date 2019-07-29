@@ -26,7 +26,7 @@ public class SysUserController {
     public List<SysUser> findAllByJPA() {
         return sysUserService.findAllByJPA();
     }
-
+    @Log("123")
     @GetMapping(value = "/findAll")
     public List<SysUser> findAll() {
         return sysUserService.findAll();
@@ -41,5 +41,9 @@ public class SysUserController {
     @GetMapping(value = "/update")
     public SysUser update(String id) {
         return sysUserService.update(id);
+    }
+    @GetMapping(value = "/findById")
+    public SysUser findById(String id) {
+        return sysUserService.findById(id);
     }
 }

@@ -78,3 +78,9 @@ mybatis:
   mapper-locations: classpath:mapper/*.xml
   property:
     order: BEFORE
+
+logging:
+  level:
+    com:
+      smallking:
+        dao: debug
