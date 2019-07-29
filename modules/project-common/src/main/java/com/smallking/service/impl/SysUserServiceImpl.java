@@ -51,15 +51,18 @@ public class SysUserServiceImpl implements ISysUserService {
     }
 
     @Override
-    public SysUser update(String id) {
-        SysUser user = sysUserRepository.findById(id).get();
-        user.setName("321");
-        SysUser result = sysUserRepository.saveAndFlush(user);
+    public SysUser update(SysUser sysUser) {
+        SysUser result = sysUserRepository.saveAndFlush(sysUser);
         return result;
     }
 
     @Override
     public SysUser findById(String id) {
-        return sysUserRepository.findById(id).get();
+        return sysUserDao.findById(id);
+    }
+
+    @Override
+    public void delete(String id) {
+        sysUserRepository.deleteById(id);
     }
 }

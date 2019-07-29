@@ -1,6 +1,10 @@
 package com.smallking.service;
 
 import com.smallking.model.SysUser;
+import org.springframework.cache.annotation.CacheConfig;
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.CachePut;
+import org.springframework.cache.annotation.Cacheable;
 
 import java.util.List;
 import java.util.Map;
@@ -10,6 +14,7 @@ import java.util.Map;
  * @Author: smallking
  * @Date: 2019-07-27
  */
+@CacheConfig(cacheNames = "student")
 public interface ISysUserService {
 
     /**
@@ -49,7 +54,13 @@ public interface ISysUserService {
      * @Author: smallking
      * @Date: 2019-07-27
      */
-    SysUser update(String id);
 
+    @CachePut(key = "#p0.id")
+    SysUser update(SysUser sysUser);
+
+    @Cacheable(key = "#p0")
     SysUser findById(String id);
+
+    @CacheEvict(key = "#p0", allEntries = true)
+    void delete(String id);
 }
