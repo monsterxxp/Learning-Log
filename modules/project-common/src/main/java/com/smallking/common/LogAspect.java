@@ -59,17 +59,17 @@ public class LogAspect {
         String methodName = signature.getName();
         // 参数
         Object[] args = joinPoint.getArgs();
-        System.out.println(Arrays.asList(args));
+
         LocalVariableTableParameterNameDiscoverer params = new LocalVariableTableParameterNameDiscoverer();
         String[] parameterNames = params.getParameterNames(method);
-        Map<String, String> map = new HashMap<>();
+        Map<String, String> paramsMap = new HashMap<>();
         for (int i = 0; i < parameterNames.length; i++) {
-           map.put(parameterNames[i],args[i].toString()) ;
+            paramsMap.put(parameterNames[i],args[i].toString()) ;
         }
         HttpServletRequest httpServletRequest = HttpContextUtils.getHttpServletRequest();
         String ipAddr = IpUtils.getIpAddr(httpServletRequest);
 
-        logger.info("执行方法：" + className  + "." + methodName + "()，方法执行时间：" + time + ",说明：" + log.value() + "，参数：" + map + "，请求IP：" + ipAddr);
+        logger.info("执行方法：" + className  + "." + methodName + "()，方法执行时间：" + time + ",说明：" + log.value() + "，参数：【" + (paramsMap.isEmpty() ? "无参数":paramsMap) + "】，请求IP：" + ipAddr);
     }
 }
 

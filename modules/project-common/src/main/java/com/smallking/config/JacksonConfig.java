@@ -13,13 +13,13 @@ import java.text.SimpleDateFormat;
  * @create: 2019-07-30 01:43
  **/
 
-//@Configurable
+@Configurable
 public class JacksonConfig {
 
     @Bean
     public ObjectMapper getObjectMapper() {
         ObjectMapper objectMapper = new ObjectMapper();
-//        objectMapper.setDateFormat(new SimpleDateFormat("yyyy-MM-dd HH:mm:ss"));
+        objectMapper.setDateFormat(new SimpleDateFormat("yyyy-MM-dd HH:mm:ss"));
         return objectMapper;
     }
 }

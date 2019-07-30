@@ -5,6 +5,8 @@ smallking:
   name: smallking
 
 spring:
+  thymeleaf:
+    cache: true
   cache:
     ehcache:
       config: 'classpath:chcache.xml'
@@ -27,6 +29,18 @@ spring:
   host: localhost
   # Redis服务器连接端口
   port: 6379
+
+  mail:
+    host: smtp.163.com
+    username: 18159352772@163.com
+    password: wsx88599233
+    properties:
+      mail:
+        smtp:
+          auth: true
+          starttls:
+            enable: true
+            required: true
 
   datasource:
     druid:
@@ -94,6 +108,8 @@ spring:
 #        dialect: org.hibernate.dialect.PostgreSQLDialect
         temp:
           use_jdbc_metadata_defaults: false
+
+#Mybatis配置
 mybatis:
   # type-aliases扫描路径
   # type-aliases-package:
@@ -102,6 +118,7 @@ mybatis:
   property:
     order: BEFORE
 
+#日志配置
 logging:
   level:
     com:

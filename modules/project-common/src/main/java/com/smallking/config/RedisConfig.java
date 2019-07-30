@@ -81,19 +81,19 @@ public class RedisConfig extends CachingConfigurerSupport {
     }
 //    @Bean
 //    public RedisTemplate<String, String> redisTemplate(RedisConnectionFactory factory) {
-//        StringRedisTemplate template = new StringRedisTemplate(factory);
-//        setSerializer(template);// 设置序列化工具
-//        template.afterPropertiesSet();
-//        return template;
+//        StringRedisTemplate templates = new StringRedisTemplate(factory);
+//        setSerializer(templates);// 设置序列化工具
+//        templates.afterPropertiesSet();
+//        return templates;
 //    }
 //
-//    private void setSerializer(StringRedisTemplate template) {
+//    private void setSerializer(StringRedisTemplate templates) {
 //        @SuppressWarnings({ "rawtypes", "unchecked" })
 //        Jackson2JsonRedisSerializer jackson2JsonRedisSerializer = new Jackson2JsonRedisSerializer(Object.class);
 //        ObjectMapper om = new ObjectMapper();
 //        om.setVisibility(PropertyAccessor.ALL, JsonAutoDetect.Visibility.ANY);
 //        om.enableDefaultTyping(ObjectMapper.DefaultTyping.NON_FINAL);
 //        jackson2JsonRedisSerializer.setObjectMapper(om);
-//        template.setValueSerializer(jackson2JsonRedisSerializer);
+//        templates.setValueSerializer(jackson2JsonRedisSerializer);
 //    }
 }
