@@ -1,5 +1,6 @@
 package com.smallking.service.impl;
 
+import com.smallking.common.BizException;
 import com.smallking.dao.SysUserDao;
 import com.smallking.model.SysUser;
 import com.smallking.service.ISysUserService;
@@ -8,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.util.StringUtils;
 
 import java.math.BigDecimal;
 import java.util.List;

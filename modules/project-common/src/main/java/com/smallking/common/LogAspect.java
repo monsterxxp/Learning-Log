@@ -3,20 +3,17 @@ package com.smallking.common;
 import com.smallking.annotation.Log;
 import com.smallking.utils.HttpContextUtils;
 import com.smallking.utils.IpUtils;
-import org.apache.tomcat.util.net.IPv6Utils;
+import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.ProceedingJoinPoint;
-import org.aspectj.lang.Signature;
-import org.aspectj.lang.annotation.Around;
-import org.aspectj.lang.annotation.Aspect;
-import org.aspectj.lang.annotation.Pointcut;
+import org.aspectj.lang.annotation.*;
 import org.aspectj.lang.reflect.MethodSignature;
 import org.jboss.logging.Logger;
 import org.springframework.core.LocalVariableTableParameterNameDiscoverer;
 import org.springframework.stereotype.Component;
-import sun.net.util.IPAddressUtil;
+import org.springframework.web.context.request.RequestContextHolder;
+import org.springframework.web.context.request.ServletRequestAttributes;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.xml.ws.spi.http.HttpContext;
 import java.lang.reflect.Method;
 import java.util.Arrays;
 import java.util.HashMap;
@@ -27,49 +24,54 @@ import java.util.Map;
 public class LogAspect {
 
     private final static Logger logger = Logger.getLogger(LogAspect.class);
-    @Pointcut("@annotation(com.smallking.annotation.Log)")
-    public void pointcut() {}
 
-    @Around("pointcut()")
-    public Object around(ProceedingJoinPoint joinPoint) {
+    private long startTime;
 
-        Object result = null;
-        long startTime = System.currentTimeMillis();
+    @Pointcut("@annotation(log)")
+    public void pointcut(Log log) {}
 
-        try {
-            result = joinPoint.proceed();
-        } catch (Throwable e) {
-            e.printStackTrace();
-        }
-        long time = System.currentTimeMillis() - startTime;
-        
+    @Before("pointcut(log)")
+    public void doBefore(JoinPoint joinPoint, Log log) {
+        startTime = System.currentTimeMillis();
 
-        saveLog(joinPoint, time);
-        return result;
-    }
+        // 接收到请求，记录请求内容
+        HttpServletRequest request = HttpContextUtils.getHttpServletRequest();
 
-    private void saveLog(ProceedingJoinPoint joinPoint, long time) {
         MethodSignature signature = (MethodSignature) joinPoint.getSignature();
         Method method = signature.getMethod();
-        // 注解描述
-        Log log = method.getAnnotation(Log.class);
         // 类名
         String className = joinPoint.getTarget().getClass().getName();
         // 方法名
         String methodName = signature.getName();
+
+        // 记录下请求内容
+        logger.info("请求URL : " + request.getRequestURL().toString());
+        logger.info("请求方式 : " + request.getMethod());
+        String ip = IpUtils.getIpAddr(request);
+        logger.info("请求IP : " + ip);
+        String executeMethod = className + "." + methodName + "()";
+        logger.info("请求方法 : " + executeMethod);
+        String methodDesc = log.value();
+        logger.info("执行操作 : " + methodDesc);
         // 参数
         Object[] args = joinPoint.getArgs();
 
         LocalVariableTableParameterNameDiscoverer params = new LocalVariableTableParameterNameDiscoverer();
         String[] parameterNames = params.getParameterNames(method);
         Map<String, String> paramsMap = new HashMap<>();
-        for (int i = 0; i < parameterNames.length; i++) {
+        for (int i = 0; i < args.length; i++) {
             paramsMap.put(parameterNames[i],args[i].toString()) ;
         }
-        HttpServletRequest httpServletRequest = HttpContextUtils.getHttpServletRequest();
-        String ipAddr = IpUtils.getIpAddr(httpServletRequest);
+        logger.info("请求参数 : " + paramsMap);
+    }
 
-        logger.info("执行方法：" + className  + "." + methodName + "()，方法执行时间：" + time + ",说明：" + log.value() + "，参数：【" + (paramsMap.isEmpty() ? "无参数":paramsMap) + "】，请求IP：" + ipAddr);
+    @AfterReturning(returning = "ret", pointcut = "pointcut(log)")
+    public void doAfterReturning(Object ret, Log log) throws Throwable {
+        long time = System.currentTimeMillis() - startTime;
+        // 处理完请求，返回内容
+        logger.info("返回结果 : " + ret);
+        logger.info("执行时长 : " + time);
+
     }
 }
 
