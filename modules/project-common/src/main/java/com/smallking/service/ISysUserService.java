@@ -14,7 +14,7 @@ import java.util.Map;
  * @Author: smallking
  * @Date: 2019-07-27
  */
-@CacheConfig(cacheNames = "student")
+@CacheConfig(cacheNames = "sysUser")
 public interface ISysUserService {
 
     /**

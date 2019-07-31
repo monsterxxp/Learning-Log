@@ -7,9 +7,9 @@ smallking:
 spring:
   thymeleaf:
     cache: true
-  cache:
-    ehcache:
-      config: 'classpath:chcache.xml'
+#  cache:
+#    ehcache:
+#      config: 'classpath:chcache.xml'
   redis:
     lettuce:
       pool:
