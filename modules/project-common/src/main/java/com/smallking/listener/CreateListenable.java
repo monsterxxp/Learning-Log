@@ -10,7 +10,7 @@ import java.util.Date;
  **/
 public interface CreateListenable {
 
-    void setCreateTime(Date val);
+    void setCreatedTime(Date val);
 
-    Date getCreateTime();
+    Date getCreatedTime();
 }

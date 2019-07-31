@@ -10,7 +10,7 @@ import java.util.Date;
  **/
 public interface UpdateListenable {
 
-    void setUpdateTime(Date val);
+    void setUpdatedTime(Date val);
 
-    Date getUpdateTime();
+    Date getUpdatedTime();
 }

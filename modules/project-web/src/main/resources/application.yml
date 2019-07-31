@@ -108,7 +108,6 @@ spring:
 #        dialect: org.hibernate.dialect.PostgreSQLDialect
         temp:
           use_jdbc_metadata_defaults: false
-
 #Mybatis配置
 mybatis:
   # type-aliases扫描路径
@@ -117,6 +116,9 @@ mybatis:
   mapper-locations: classpath:mapper/*.xml
   property:
     order: BEFORE
+  type-aliases-package: com.smallking.model
+  configuration:
+    map-underscore-to-camel-case: true
 
 #日志配置
 logging:

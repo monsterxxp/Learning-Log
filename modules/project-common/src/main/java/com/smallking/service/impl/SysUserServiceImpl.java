@@ -31,12 +31,14 @@ public class SysUserServiceImpl implements ISysUserService {
 
     @Override
     public List<SysUser> findAll() {
-        return sysUserDao.findAll();
+        List<SysUser> users = sysUserDao.findAll();
+        return users;
     }
 
     @Override
     public List<SysUser> findAllByJPA() {
-        return sysUserRepository.findAll();
+        List<SysUser> users = sysUserRepository.findAll();
+        return users;
     }
 
     @Override

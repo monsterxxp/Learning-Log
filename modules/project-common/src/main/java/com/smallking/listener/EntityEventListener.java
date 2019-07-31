@@ -23,8 +23,8 @@ public class EntityEventListener {
     @PrePersist
     public void prePersist(Object entity) {
         if (entity instanceof CreateListenable) {
-            if (((CreateListenable) entity).getCreateTime() == null) {
-                ((CreateListenable) entity).setCreateTime(new Date(System.currentTimeMillis()));
+            if (((CreateListenable) entity).getCreatedTime() == null) {
+                ((CreateListenable) entity).setCreatedTime(new Date(System.currentTimeMillis()));
             }
         }
     }
@@ -37,8 +37,8 @@ public class EntityEventListener {
     @PreUpdate
     public void preUpdate(Object entity) {
         if (entity instanceof UpdateListenable) {
-            if (((UpdateListenable) entity).getUpdateTime() == null) {
-                ((UpdateListenable) entity).setUpdateTime(new Date(System.currentTimeMillis()));
+            if (((UpdateListenable) entity).getUpdatedTime() == null) {
+                ((UpdateListenable) entity).setUpdatedTime(new Date(System.currentTimeMillis()));
             }
         }
     }

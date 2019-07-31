@@ -6,9 +6,7 @@ import com.smallking.listener.UpdateListenable;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.Id;
 import javax.persistence.Table;
-import java.io.Serializable;
 import java.util.Date;
 
 /**
@@ -31,11 +29,11 @@ public class SysUser extends BaseModel implements CreateListenable, UpdateListen
     @Column(name = "password", columnDefinition = "VARCHAR")
     private String password;
 
-    @Column(name = "create_time", columnDefinition = "TIMESTAMP")
-    private Date createTime;
+    @Column(name = "created_time", columnDefinition = "TIMESTAMP")
+    private Date createdTime;
 
-    @Column(name = "update_time", columnDefinition = "TIMESTAMP")
-    private Date updateTime;
+    @Column(name = "updated_time", columnDefinition = "TIMESTAMP")
+    private Date updatedTime;
 
     public String getName() {
         return name;
@@ -61,23 +59,19 @@ public class SysUser extends BaseModel implements CreateListenable, UpdateListen
         this.password = password;
     }
 
-    @Override
-    public Date getCreateTime() {
-        return createTime;
+    public Date getCreatedTime() {
+        return createdTime;
     }
 
-    @Override
-    public void setCreateTime(Date createTime) {
-        this.createTime = createTime;
+    public void setCreatedTime(Date createdTime) {
+        this.createdTime = createdTime;
     }
 
-    @Override
-    public Date getUpdateTime() {
-        return updateTime;
+    public Date getUpdatedTime() {
+        return updatedTime;
     }
 
-    @Override
-    public void setUpdateTime(Date updateTime) {
-        this.updateTime = updateTime;
+    public void setUpdatedTime(Date updatedTime) {
+        this.updatedTime = updatedTime;
     }
 }
