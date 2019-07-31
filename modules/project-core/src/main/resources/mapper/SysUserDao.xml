@@ -6,6 +6,12 @@
 
     <resultMap id="sysUserResultMap" type="com.smallking.model.SysUser"></resultMap>
 
+    <sql id="findDtoSql">
+        select * from (
+        select temp.*
+        from tm_project_equipment_resource temp
+        ) t
+    </sql>
     <select id="findAll" resultMap="sysUserResultMap">
         select * from sys_user
     </select>

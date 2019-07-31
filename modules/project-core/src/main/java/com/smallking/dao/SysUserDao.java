@@ -27,6 +27,6 @@ public interface SysUserDao {
      */
     List<SysUser> findAll();
 
-    @Select("SELECT * FROM sys_user WHERE id=#{id}")
-    SysUser findById(@Param("id") String id);
+    @Select("SELECT * FROM sys_user WHERE account=#{account}")
+    SysUser findById(@Param("account") String account);
 }
