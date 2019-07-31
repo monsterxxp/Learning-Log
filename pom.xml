@@ -22,7 +22,6 @@
     <modules>
         <module>modules/project-web</module>
         <module>modules/project-common</module>
-        <module>modules/test</module>
     </modules>
 
     <dependencies>
@@ -139,11 +138,6 @@
             <dependency>
                 <groupId>com.smallking</groupId>
                 <artifactId>project-common</artifactId>
-                <version>0.0.1-SNAPSHOT</version>
-            </dependency>
-            <dependency>
-                <groupId>com.smallking</groupId>
-                <artifactId>test</artifactId>
                 <version>0.0.1-SNAPSHOT</version>
             </dependency>
         </dependencies>

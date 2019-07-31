@@ -18,10 +18,6 @@
             <groupId>com.smallking</groupId>
             <artifactId>project-common</artifactId>
         </dependency>
-        <dependency>
-            <groupId>com.smallking</groupId>
-            <artifactId>test</artifactId>
-        </dependency>
     </dependencies>
     <build>
         <plugins>
