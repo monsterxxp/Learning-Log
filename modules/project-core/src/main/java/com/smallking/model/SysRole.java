@@ -10,33 +10,28 @@ import javax.persistence.Table;
 import java.util.Date;
 
 /**
- * @program: learn
- * @description: 系统用户类
+ * @description: 角色
  * @author: smallking
- * @data: 2019-07-27 01:41
+ * @date: 2019-08-01
  **/
 @Entity
-@Table(name = "sys_user")
-public class SysUser extends BaseModel implements CreateListenable, UpdateListenable {
-
+@Table(name = "sys_role")
+public class SysRole extends BaseModel implements CreateListenable, UpdateListenable {
 
     @Column(name = "name", columnDefinition = "VARCHAR")
     private String name;
 
-    @Column(name = "account", columnDefinition = "VARCHAR")
-    private String account;
+    @Column(name = "code", columnDefinition = "VARCHAR")
+    private String code;
 
-    @Column(name = "password", columnDefinition = "VARCHAR")
-    private String password;
+    @Column(name = "description", columnDefinition = "VARCHAR")
+    private String description;
 
     @Column(name = "created_time", columnDefinition = "TIMESTAMP")
     private Date createdTime;
 
     @Column(name = "updated_time", columnDefinition = "TIMESTAMP")
     private Date updatedTime;
-
-    @Column(name = "status", columnDefinition = "VARCHAR")
-    private String status;
 
     public String getName() {
         return name;
@@ -46,43 +41,39 @@ public class SysUser extends BaseModel implements CreateListenable, UpdateListen
         this.name = name;
     }
 
-    public String getAccount() {
-        return account;
+    public String getDescription() {
+        return description;
     }
 
-    public void setAccount(String account) {
-        this.account = account;
+    public void setDescription(String description) {
+        this.description = description;
     }
 
-    public String getPassword() {
-        return password;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
-    }
-
+    @Override
     public Date getCreatedTime() {
         return createdTime;
     }
 
+    @Override
     public void setCreatedTime(Date createdTime) {
         this.createdTime = createdTime;
     }
 
+    @Override
     public Date getUpdatedTime() {
         return updatedTime;
     }
 
+    @Override
     public void setUpdatedTime(Date updatedTime) {
         this.updatedTime = updatedTime;
     }
 
-    public String getStatus() {
-        return status;
+    public String getCode() {
+        return code;
     }
 
-    public void setStatus(String status) {
-        this.status = status;
+    public void setCode(String code) {
+        this.code = code;
     }
 }

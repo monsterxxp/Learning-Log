@@ -13,53 +13,13 @@ import java.util.List;
  * @Author: smallking
  * @Date: 2019-07-27
  */
-@CacheConfig(cacheNames = "sysUser")
 public interface ISysUserService {
-
-    /**
-     * 查询所有系统用户
-     * @param
-     * @return: {@link {@link List< SysUser>}}
-     * @throws
-     * @Author: smallking
-     * @Date: 2019-07-27
-     */
-    List<SysUser> findAll();
-
-    /**
-     * mysql数据源查询系统用户
-     * @param
-     * @return: {@link {@link List< SysUser>}}
-     * @throws
-     * @Author: smallking
-     * @Date: 2019-07-27
-     */
-    List<SysUser> findAllByJPA();
-
-    /**
-     * 新增用户
-     * @param
-     * @return: {@link {@link SysUser}}
-     * @throws
-     * @Author: smallking
-     * @Date: 2019-07-27
-     */
-    SysUser create();
-    /**
-     * 修改用户
-     * @param
-     * @return: {@link {@link SysUser}}
-     * @throws
-     * @Author: smallking
-     * @Date: 2019-07-27
-     */
-
-    @CachePut(key = "#p0.id")
-    SysUser update(SysUser sysUser);
-
-    @Cacheable(key = "#p0")
-    SysUser findById(String id);
-
-    @CacheEvict(key = "#p0", allEntries = true)
-    void delete(String id);
+   /**
+    * 根据用户名查询系统用户
+    *
+    * @param  account
+    * @return  sysUser
+    * @date  2019-07-31
+    */
+    SysUser findByAccount(String account);
 }

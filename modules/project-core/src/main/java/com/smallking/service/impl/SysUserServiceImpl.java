@@ -26,41 +26,7 @@ public class SysUserServiceImpl implements ISysUserService {
     private SysUserRepository sysUserRepository;
 
     @Override
-    public List<SysUser> findAll() {
-        List<SysUser> users = sysUserDao.findAll();
-        return users;
-    }
-
-    @Override
-    public List<SysUser> findAllByJPA() {
-        List<SysUser> users = sysUserRepository.findAll();
-        return users;
-    }
-
-    @Override
-    @Transactional
-    public SysUser create() {
-        SysUser user = new SysUser();
-        user.setAccount("123");
-        user.setName("12312");
-        user.setPassword("1123");
-        SysUser sysUser = sysUserRepository.saveAndFlush(user);
-        return sysUser;
-    }
-
-    @Override
-    public SysUser update(SysUser sysUser) {
-        SysUser result = sysUserRepository.saveAndFlush(sysUser);
-        return result;
-    }
-
-    @Override
-    public SysUser findById(String id) {
-        return sysUserDao.findById(id);
-    }
-
-    @Override
-    public void delete(String id) {
-        sysUserRepository.deleteById(id);
+    public SysUser findByAccount(String account) {
+        return sysUserDao.findByAccount(account);
     }
 }

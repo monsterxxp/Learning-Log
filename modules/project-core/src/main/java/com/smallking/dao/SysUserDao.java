@@ -17,16 +17,5 @@ import java.util.List;
 @Component
 public interface SysUserDao {
 
-    /**
-     * 查询所有系统用户
-     * @param
-     * @return: {@link {@link List< SysUser>}}
-     * @throws
-     * @Author: smallking
-     * @Date: 2019-07-27
-     */
-    List<SysUser> findAll();
-
-    @Select("SELECT * FROM sys_user WHERE account=#{account}")
-    SysUser findById(@Param("account") String account);
+    SysUser findByAccount(@Param("account") String account);
 }

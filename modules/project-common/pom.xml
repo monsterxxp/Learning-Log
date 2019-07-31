@@ -13,9 +13,5 @@
     <artifactId>project-common</artifactId>
 
     <dependencies>
-        <dependency>
-            <groupId>com.smallking</groupId>
-            <artifactId>project-common</artifactId>
-        </dependency>
     </dependencies>
 </project>

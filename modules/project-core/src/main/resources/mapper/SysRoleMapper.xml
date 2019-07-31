@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.smallking.dao.SysRoleDao">
+
+    <resultMap id="sysRoleResultMap" type="com.smallking.model.SysRole"></resultMap>
+
+    <sql id="findDtoSql">
+        select * from (
+        select temp.*
+        from sys_role temp
+        ) t
+    </sql>
+
+    <select id="findByAccount" parameterType="string" resultMap="sysRoleResultMap">
+        select sr.*
+        from sys_role sr
+        left join sys_role_user sru on sr.id = sru.role_id
+        left join sys_user su on  su.id = sru.user_id
+        where su.account = #{account}
+    </select>
+</mapper>

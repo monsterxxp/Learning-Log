@@ -1,21 +1,13 @@
 package com.smallking.config;
 
-import com.fasterxml.jackson.annotation.JsonAutoDetect;
-import com.fasterxml.jackson.annotation.PropertyAccessor;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.sun.javafx.collections.MappingChange;
 import org.jboss.logging.Logger;
-import org.springframework.beans.factory.annotation.Configurable;
-import org.springframework.cache.CacheManager;
 import org.springframework.cache.annotation.CachingConfigurerSupport;
 import org.springframework.cache.interceptor.KeyGenerator;
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
 import org.springframework.data.redis.cache.RedisCacheConfiguration;
 import org.springframework.data.redis.cache.RedisCacheManager;
-import org.springframework.data.redis.cache.RedisCacheWriter;
 import org.springframework.data.redis.connection.RedisConnectionFactory;
-import org.springframework.data.redis.core.RedisTemplate;
-import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.data.redis.serializer.*;
 
 import java.time.Duration;
@@ -27,7 +19,7 @@ import java.time.Duration;
  * @author: smallking
  * @create: 2019-07-30 00:41
  **/
-@Configurable
+@Configuration
 public class RedisConfig extends CachingConfigurerSupport {
 
     private final static Logger logger = Logger.getLogger(RedisConfig.class);
