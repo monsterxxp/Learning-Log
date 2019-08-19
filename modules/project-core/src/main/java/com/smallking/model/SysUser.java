@@ -1,5 +1,7 @@
 package com.smallking.model;
 
+import com.baomidou.mybatisplus.annotation.TableField;
+import com.baomidou.mybatisplus.annotation.TableName;
 import com.smallking.common.BaseModel;
 import com.smallking.listener.CreateListenable;
 import com.smallking.listener.UpdateListenable;

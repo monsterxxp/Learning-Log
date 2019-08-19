@@ -33,6 +33,12 @@ public class SysPermission extends BaseModel implements CreateListenable, Update
     @Column(name = "updated_time", columnDefinition = "TIMESTAMP")
     private Date updatedTime;
 
+    @Column(name = "parent_id", columnDefinition = "VARCHAR")
+    private String parentId;
+
+    @Column(name = "url", columnDefinition = "VARCHAR")
+    private String url;
+
     public String getName() {
         return name;
     }
@@ -75,5 +81,21 @@ public class SysPermission extends BaseModel implements CreateListenable, Update
     @Override
     public void setUpdatedTime(Date updatedTime) {
         this.updatedTime = updatedTime;
+    }
+
+    public String getParentId() {
+        return parentId;
+    }
+
+    public void setParentId(String parentId) {
+        this.parentId = parentId;
+    }
+
+    public String getUrl() {
+        return url;
+    }
+
+    public void setUrl(String url) {
+        this.url = url;
     }
 }

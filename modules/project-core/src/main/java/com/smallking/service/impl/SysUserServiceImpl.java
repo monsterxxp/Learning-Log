@@ -1,5 +1,7 @@
 package com.smallking.service.impl;
 
+import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.smallking.dao.SysUserDao;
 import com.smallking.model.SysUser;
 import com.smallking.service.ISysUserService;
@@ -28,5 +30,10 @@ public class SysUserServiceImpl implements ISysUserService {
     @Override
     public SysUser findByAccount(String account) {
         return sysUserDao.findByAccount(account);
+    }
+
+    @Override
+    public IPage findPage(Page pageable, SysUser sysUser) {
+        return sysUserDao.findPage(pageable, sysUser);
     }
 }

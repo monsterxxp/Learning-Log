@@ -35,14 +35,14 @@ public class Return<T> implements Serializable {
      * 调用默认成功
      */
     public static <T> Return<T> ok(){
-        return new Return<T>(true, 200, "返回成功");
+        return new Return<T>(true, 20000, "返回成功");
     }
 
     /**
      * 调用默认成功
      */
     public static <T> Return<T> ok(T data){
-        return new Return<T>(data, true, 200, "返回成功");
+        return new Return<T>(data, true, 20000, "返回成功");
     }
 
     /**

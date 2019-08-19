@@ -1,5 +1,7 @@
 package com.smallking.service;
 
+import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.smallking.model.SysUser;
 import org.springframework.cache.annotation.CacheConfig;
 import org.springframework.cache.annotation.CacheEvict;
@@ -22,4 +24,6 @@ public interface ISysUserService {
     * @date  2019-07-31
     */
     SysUser findByAccount(String account);
+
+    IPage findPage(Page pageable, SysUser sysUser);
 }

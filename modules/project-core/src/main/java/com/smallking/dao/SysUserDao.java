@@ -1,5 +1,8 @@
 package com.smallking.dao;
 
+import com.baomidou.mybatisplus.core.mapper.BaseMapper;
+import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.smallking.model.SysUser;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
@@ -15,7 +18,9 @@ import java.util.List;
  */
 @Mapper
 @Component
-public interface SysUserDao {
+public interface SysUserDao extends BaseMapper<SysUser> {
 
     SysUser findByAccount(@Param("account") String account);
+
+    IPage findPage(Page pageable, @Param("val") SysUser sysUser);
 }

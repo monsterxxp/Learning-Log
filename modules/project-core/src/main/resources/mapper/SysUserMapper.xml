@@ -19,4 +19,16 @@
             t.account = #{account}
         </where>
     </select>
+    <select id="findPage" parameterType="com.smallking.model.SysUser" resultMap="sysUserResultMap">
+        <include refid="findDtoSql" />
+        <where>
+            <if test="val.name != '' and val.name != null">
+                and upper(t.name) like CONCAT('%',upper(#{val.name}),'%')
+                or upper(t.account) like CONCAT('%',upper(#{val.name}),'%')
+            </if>
+            <if test="val.status != '' and val.status != null">
+                and status = #{val.status}
+            </if>
+        </where>
+    </select>
 </mapper>
