@@ -6,8 +6,8 @@ create table sys_user
     name        varchar(32),
     account     varchar(32),
     password    varchar(32),
-    create_time timestamp,
-    update_time timestamp,
+    created_time timestamp,
+    updated_time timestamp,
     status      varchar(2)
 );
 
@@ -21,9 +21,9 @@ comment on column sys_user.account is '账号';
 
 comment on column sys_user.password is '密码';
 
-comment on column sys_user.create_time is '创建时间';
+comment on column sys_user.created_time is '创建时间';
 
-comment on column sys_user.update_time is '更新时间';
+comment on column sys_user.updated_time is '更新时间';
 
 comment on column sys_user.status is '用户状态';
 
