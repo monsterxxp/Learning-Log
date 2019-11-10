@@ -14,7 +14,7 @@ import java.util.List;
  **/
 @Mapper
 @Component
-public interface SysPermissionDao {
+public interface SysPermissionDAO {
 
     List<SysPermission> findByAccount(@Param("account") String account);
 }

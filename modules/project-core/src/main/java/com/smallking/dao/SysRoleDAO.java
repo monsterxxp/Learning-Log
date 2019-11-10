@@ -14,6 +14,6 @@ import java.util.List;
  **/
 @Mapper
 @Component
-public interface SysRoleDao {
+public interface SysRoleDAO {
     List<SysRole> findByAccount(@Param("account") String account);
 }

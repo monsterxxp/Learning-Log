@@ -2,15 +2,12 @@ package com.smallking.service.impl;
 
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
-import com.smallking.dao.SysUserDao;
+import com.smallking.dao.SysUserDAO;
 import com.smallking.model.SysUser;
 import com.smallking.service.ISysUserService;
 import com.smallking.service.impl.repository.SysUserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
-
-import java.util.List;
 
 /**
  * @program: learn
@@ -18,11 +15,11 @@ import java.util.List;
  * @author: smallking
  * @data: 2019-07-27 01:47
  **/
-@Service
+@Service("sysUserService")
 public class SysUserServiceImpl implements ISysUserService {
 
     @Autowired
-    private SysUserDao sysUserDao;
+    private SysUserDAO sysUserDao;
 
     @Autowired
     private SysUserRepository sysUserRepository;

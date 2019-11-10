@@ -1,7 +1,7 @@
 package com.smallking.common;
 
-import com.smallking.dao.SysPermissionDao;
-import com.smallking.dao.SysRoleDao;
+import com.smallking.dao.SysPermissionDAO;
+import com.smallking.dao.SysRoleDAO;
 import com.smallking.model.SysPermission;
 import com.smallking.model.SysRole;
 import com.smallking.model.SysUser;
@@ -11,13 +11,11 @@ import org.apache.shiro.authc.*;
 import org.apache.shiro.authz.AuthorizationInfo;
 import org.apache.shiro.authz.SimpleAuthorizationInfo;
 import org.apache.shiro.realm.AuthorizingRealm;
-import org.apache.shiro.session.Session;
 import org.apache.shiro.subject.PrincipalCollection;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
 
 import java.util.*;
-import java.util.stream.Collectors;
 
 @Configuration
 public class ShiroRealm extends AuthorizingRealm {
@@ -26,10 +24,10 @@ public class ShiroRealm extends AuthorizingRealm {
     protected ISysUserService sysUserService;
 
     @Autowired
-    protected SysRoleDao sysRoleDao;
+    protected SysRoleDAO sysRoleDao;
 
     @Autowired
-    protected SysPermissionDao sysPermissionDao;
+    protected SysPermissionDAO sysPermissionDao;
     /**
      * 认证回调函数,登录时调用
      * 首先根据传入的用户名获取User信息；然后如果user为空，那么抛出没找到帐号异常UnknownAccountException；

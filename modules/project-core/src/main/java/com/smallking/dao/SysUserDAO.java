@@ -18,7 +18,7 @@ import java.util.List;
  */
 @Mapper
 @Component
-public interface SysUserDao extends BaseMapper<SysUser> {
+public interface SysUserDAO extends BaseMapper<SysUser> {
 
     SysUser findByAccount(@Param("account") String account);
 
