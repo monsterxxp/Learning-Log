@@ -11,7 +11,9 @@ import org.apache.shiro.authc.*;
 import org.apache.shiro.authz.AuthorizationInfo;
 import org.apache.shiro.authz.SimpleAuthorizationInfo;
 import org.apache.shiro.realm.AuthorizingRealm;
+import org.apache.shiro.session.Session;
 import org.apache.shiro.subject.PrincipalCollection;
+import org.apache.shiro.util.ByteSource;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
 
@@ -41,25 +43,25 @@ public class ShiroRealm extends AuthorizingRealm {
     @Override
     protected AuthenticationInfo doGetAuthenticationInfo(AuthenticationToken token) {
         // 获取用户输入的用户名和密码
-        String userName = (String) token.getPrincipal();
-        String password = new String((char[]) token.getCredentials());
-
-        System.out.println("用户" + userName + "认证-----ShiroRealm.doGetAuthenticationInfo");
+        String principal = (String)token.getPrincipal();
 
         // 通过用户名到数据库查询用户信息
-        SysUser user = sysUserService.findByAccount(userName);
+        SysUser user = Optional.ofNullable(sysUserService.findByAccount(principal)).orElseThrow(UnknownAccountException::new);
 
         if (user == null) {
             throw new UnknownAccountException("用户名或密码错误！");
         }
-        if (!password.equals(user.getPassword())) {
-            System.out.println(password + ":" + user.getPassword());
-            throw new IncorrectCredentialsException("用户名或密码错误！");
-        }
         if (user.getStatus().equals("0")) {
             throw new LockedAccountException("账号已被锁定,请联系管理员！");
         }
-        SimpleAuthenticationInfo info = new SimpleAuthenticationInfo(user, password, getName());
+        // 从数据库查询出来的账号名和密码,与用户输入的账号和密码对比
+        // 当用户执行登录时,在方法处理上要实现 user.login(token)
+        // 然后会自动进入这个类进行认证
+        // 交给 AuthenticatingRealm 使用 CredentialsMatcher 进行密码匹配，如果觉得人家的不好可以自定义实现
+        // TODO 如果使用 HashedCredentialsMatcher 这里认证方式就要改一下 SimpleAuthenticationInfo authenticationInfo = new SimpleAuthenticationInfo(principal, "密码", ByteSource.Util.bytes("密码盐"), getName());
+        SimpleAuthenticationInfo info = new SimpleAuthenticationInfo(principal, user.getPassword(), ByteSource.Util.bytes(user.getSalt()), getName());
+        Session session = SecurityUtils.getSubject().getSession();
+        session.setAttribute("USER_SESSION", user);
         return info;
     }
 

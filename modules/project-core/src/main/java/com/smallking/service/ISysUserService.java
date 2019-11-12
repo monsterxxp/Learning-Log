@@ -26,4 +26,6 @@ public interface ISysUserService {
     SysUser findByAccount(String account);
 
     IPage findPage(Page pageable, SysUser sysUser);
+
+    SysUser create(SysUser sysUser);
 }

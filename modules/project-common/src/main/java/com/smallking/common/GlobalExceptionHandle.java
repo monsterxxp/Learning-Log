@@ -1,41 +1,40 @@
 package com.smallking.common;
 
+import com.alibaba.druid.util.StringUtils;
 import org.apache.shiro.authz.AuthorizationException;
-import org.jboss.logging.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
+import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 
 @ControllerAdvice
+@ResponseBody
 public class GlobalExceptionHandle{
 
-    private static final Logger logger = Logger.getLogger(GlobalExceptionHandle.class);
+    private static final Logger logger = LoggerFactory.getLogger(GlobalExceptionHandle.class);
+    private String appNo = "000-";
 
-    @ExceptionHandler(value = AuthorizationException.class)
-    public String handleAuthorizationException() {
-        return "403";
+    public GlobalExceptionHandle() {
     }
-    @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
-    @ExceptionHandler(value = Exception.class)
-    @ResponseBody
-    public Map errorHandler(Exception e) {
-        if (e instanceof BizException) {
-            BizException bizException = (BizException)e;
-            bizException.printStackTrace();
-            logger.error(bizException.getMessage());
-            Map map = new HashMap();
-            map.put("code", 1);
-            map.put("msg", bizException.getMessage());
-            return map;
-        }  else {
-            e.printStackTrace();
-            logger.error("系统错误：" + e.getMessage());
-            Map map = new HashMap();
-            map.put("code", 1);
-            map.put("msg", "系统错误");
-            return map;
-        }
+
+
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    @ExceptionHandler({BizException.class})
+    public ErrorMessage handleBusinessException(BizException ex) throws IOException {
+        logger.error(ex.getMessage(), ex);
+        String errorCode = HttpStatus.BAD_REQUEST.toString();
+        return new ErrorMessage(errorCode, ex.getMessage());
+    }
+
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    @ExceptionHandler({Exception.class})
+    public ErrorMessage handleBusinessException(Exception ex) throws IOException {
+        logger.error(ex.getMessage(), ex);
+        String errorCode = HttpStatus.BAD_REQUEST.toString();
+        return new ErrorMessage(errorCode, "系统错误");
     }
 }

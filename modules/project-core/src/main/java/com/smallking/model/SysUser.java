@@ -40,6 +40,27 @@ public class SysUser extends BaseModel implements CreateListenable, UpdateListen
     @Column(name = "status", columnDefinition = "VARCHAR")
     private String status;
 
+    @Column(name = "sex", columnDefinition = "VARCHAR")
+    private String sex;
+
+    @Column(name = "mobile", columnDefinition = "VARCHAR")
+    private String mobile;
+
+    @Column(name = "email", columnDefinition = "VARCHAR")
+    private String email;
+
+    @Column(name = "dept_id", columnDefinition = "VARCHAR")
+    private String deptId;
+
+    @Column(name = "post_id", columnDefinition = "VARCHAR")
+    private String postId;
+
+    @Column(name = "description", columnDefinition = "VARCHAR")
+    private String description;
+
+    @Column(name = "salt", columnDefinition = "VARCHAR")
+    private String salt;
+
     public String getName() {
         return name;
     }
@@ -64,18 +85,22 @@ public class SysUser extends BaseModel implements CreateListenable, UpdateListen
         this.password = password;
     }
 
+    @Override
     public Date getCreatedTime() {
         return createdTime;
     }
 
+    @Override
     public void setCreatedTime(Date createdTime) {
         this.createdTime = createdTime;
     }
 
+    @Override
     public Date getUpdatedTime() {
         return updatedTime;
     }
 
+    @Override
     public void setUpdatedTime(Date updatedTime) {
         this.updatedTime = updatedTime;
     }
@@ -86,5 +111,61 @@ public class SysUser extends BaseModel implements CreateListenable, UpdateListen
 
     public void setStatus(String status) {
         this.status = status;
+    }
+
+    public String getSex() {
+        return sex;
+    }
+
+    public void setSex(String sex) {
+        this.sex = sex;
+    }
+
+    public String getMobile() {
+        return mobile;
+    }
+
+    public void setMobile(String mobile) {
+        this.mobile = mobile;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public String getDeptId() {
+        return deptId;
+    }
+
+    public void setDeptId(String deptId) {
+        this.deptId = deptId;
+    }
+
+    public String getPostId() {
+        return postId;
+    }
+
+    public void setPostId(String postId) {
+        this.postId = postId;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public String getSalt() {
+        return salt;
+    }
+
+    public void setSalt(String salt) {
+        this.salt = salt;
     }
 }

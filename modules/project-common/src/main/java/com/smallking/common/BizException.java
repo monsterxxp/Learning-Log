@@ -2,17 +2,18 @@ package com.smallking.common;
 
 public class BizException extends RuntimeException{
 
-    private String msg;
+    private String message;
 
-    public BizException(String msg) {
-        this.msg = msg;
+    public BizException(String message) {
+        this.message = message;
     }
 
-    public String getMsg() {
-        return msg;
+    @Override
+    public String getMessage() {
+        return message;
     }
 
-    public void setMsg(String msg) {
-        this.msg = msg;
+    public void setMessage(String message) {
+        this.message = message;
     }
 }

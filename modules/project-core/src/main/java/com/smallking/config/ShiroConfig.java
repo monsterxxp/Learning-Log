@@ -2,6 +2,7 @@ package com.smallking.config;
 
 import cn.hutool.core.codec.Base64;
 import com.smallking.common.ShiroRealm;
+import org.apache.shiro.authc.credential.HashedCredentialsMatcher;
 import org.apache.shiro.mgt.SecurityManager;
 import org.apache.shiro.spring.LifecycleBeanPostProcessor;
 import org.apache.shiro.spring.security.interceptor.AuthorizationAttributeSourceAdvisor;
@@ -11,6 +12,7 @@ import org.apache.shiro.web.mgt.DefaultWebSecurityManager;
 import org.apache.shiro.web.servlet.SimpleCookie;
 import org.crazycake.shiro.RedisCacheManager;
 import org.crazycake.shiro.RedisManager;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
@@ -82,8 +84,7 @@ public class ShiroConfig {
         // 设置cookie名称，对应login.html页面的<input type="checkbox" name="rememberMe"/>
         SimpleCookie cookie = new SimpleCookie("rememberMe");
         // 设置cookie的过期时间，单位为秒，这里为一天
-//        cookie.setMaxAge(86400);
-        cookie.setMaxAge(20);
+        cookie.setMaxAge(86400);
         return cookie;
     }
 
@@ -100,20 +101,31 @@ public class ShiroConfig {
     }
 
     @Bean
-    public SecurityManager securityManager(){
+    public SecurityManager securityManager(ShiroRealm shiroRealm){
         // 配置SecurityManager，并注入shiroRealm
         DefaultWebSecurityManager securityManager =  new DefaultWebSecurityManager();
-        securityManager.setRealm(shiroRealm());
+        securityManager.setRealm(shiroRealm);
         securityManager.setRememberMeManager(rememberMeManager());
         securityManager.setCacheManager(cacheManager());
         return securityManager;
     }
 
     @Bean(name = "shiroRealm")
-    public ShiroRealm shiroRealm() {
+    public ShiroRealm shiroRealm(@Qualifier("hashedCredentialsMatcher") HashedCredentialsMatcher matcher) {
         ShiroRealm shiroRealm = new ShiroRealm();
-
+        shiroRealm.setAuthorizationCachingEnabled(false);
+        shiroRealm.setCredentialsMatcher(matcher);
         return shiroRealm;
+    }
+
+    @Bean
+    public HashedCredentialsMatcher hashedCredentialsMatcher() {
+        HashedCredentialsMatcher hashedCredentialsMatcher = new HashedCredentialsMatcher();
+        //散列算法:这里使用MD5算法;
+        hashedCredentialsMatcher.setHashAlgorithmName("md5");
+        //散列的次数，比如散列两次，相当于 md5(md5(""));
+        hashedCredentialsMatcher.setHashIterations(1024);
+        return hashedCredentialsMatcher;
     }
 
     @Bean

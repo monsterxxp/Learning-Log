@@ -1,4 +1,5 @@
 package com.smallking.service;
+import com.smallking.model.SysDictCategory;
 import com.smallking.model.dto.SysDictCategoryDTO;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;

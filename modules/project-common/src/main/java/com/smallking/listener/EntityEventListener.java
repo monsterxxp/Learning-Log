@@ -1,6 +1,7 @@
 package com.smallking.listener;
 
 import javax.persistence.PrePersist;
+import javax.persistence.PreRemove;
 import javax.persistence.PreUpdate;
 import java.util.Date;
 
@@ -37,6 +38,15 @@ public class EntityEventListener {
     @PreUpdate
     public void preUpdate(Object entity) {
         if (entity instanceof UpdateListenable) {
+            if (((UpdateListenable) entity).getUpdatedTime() == null) {
+                ((UpdateListenable) entity).setUpdatedTime(new Date(System.currentTimeMillis()));
+            }
+        }
+    }
+
+    @PreRemove
+    public void preRemove(Object entity) {
+        if (entity instanceof IDeleteListenable) {
             if (((UpdateListenable) entity).getUpdatedTime() == null) {
                 ((UpdateListenable) entity).setUpdatedTime(new Date(System.currentTimeMillis()));
             }
