@@ -2,11 +2,7 @@ package com.smallking.service;
 
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
-import com.smallking.model.SysUser;
-import org.springframework.cache.annotation.CacheConfig;
-import org.springframework.cache.annotation.CacheEvict;
-import org.springframework.cache.annotation.CachePut;
-import org.springframework.cache.annotation.Cacheable;
+import com.smallking.dto.SysUserDTO;
 
 import java.util.List;
 
@@ -23,9 +19,19 @@ public interface ISysUserService {
     * @return  sysUser
     * @date  2019-07-31
     */
-    SysUser findByAccount(String account);
+    SysUserDTO findByAccount(String account);
 
-    IPage findPage(Page pageable, SysUser sysUser);
+    IPage findPage(Page pageable, SysUserDTO sysUserDTO);
 
-    SysUser create(SysUser sysUser);
+    SysUserDTO create(SysUserDTO sysUserDTO) throws Exception;
+
+    SysUserDTO findDTOById(String id);
+
+    SysUserDTO update(SysUserDTO sysUserDTO) throws Exception;
+
+    void deleteById(String id) throws Exception;
+
+    SysUserDTO resetPwd(SysUserDTO sysUserDTO) throws Exception;
+
+    void batchBulk(List<String> ids) throws Exception;
 }

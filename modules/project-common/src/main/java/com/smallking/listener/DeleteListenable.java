@@ -1,5 +1,5 @@
 package com.smallking.listener;
 
-public interface IDeleteListenable {
+public interface DeleteListenable {
     void setStatus(String status);
 }

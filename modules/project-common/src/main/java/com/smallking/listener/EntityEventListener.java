@@ -46,7 +46,7 @@ public class EntityEventListener {
 
     @PreRemove
     public void preRemove(Object entity) {
-        if (entity instanceof IDeleteListenable) {
+        if (entity instanceof DeleteListenable) {
             if (((UpdateListenable) entity).getUpdatedTime() == null) {
                 ((UpdateListenable) entity).setUpdatedTime(new Date(System.currentTimeMillis()));
             }

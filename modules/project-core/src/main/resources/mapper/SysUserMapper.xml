@@ -4,7 +4,7 @@
 
 <mapper namespace="com.smallking.dao.SysUserDAO">
 
-    <resultMap id="sysUserResultMap" type="com.smallking.model.SysUser"></resultMap>
+    <resultMap id="sysUserDTOResultMap" type="com.smallking.dto.SysUserDTO"></resultMap>
 
     <sql id="findDtoSql">
         select * from (
@@ -13,22 +13,29 @@
         ) t
     </sql>
 
-    <select id="findByAccount" resultMap="sysUserResultMap">
-        <include refid="findDtoSql"/>
+    <select id="findByAccount" resultMap="sysUserDTOResultMap">
+        <include refid="findDtoSql" />
         <where>
             t.account = #{account}
         </where>
     </select>
-    <select id="findPage" parameterType="com.smallking.model.SysUser" resultMap="sysUserResultMap">
+    <select id="findPage" parameterType="com.smallking.dto.SysUserDTO" resultMap="sysUserDTOResultMap">
         <include refid="findDtoSql" />
         <where>
+            t.status = '1'
             <if test="val.name != '' and val.name != null">
                 and upper(t.name) like CONCAT('%',upper(#{val.name}),'%')
                 or upper(t.account) like CONCAT('%',upper(#{val.name}),'%')
             </if>
-            <if test="val.status != '' and val.status != null">
-                and status = #{val.status}
+            <if test="val.userStatus != '' and val.userStatus != null">
+                and t.user_status = #{val.userStatus}
             </if>
+        </where>
+    </select>
+    <select id="findDTOById" resultMap="sysUserDTOResultMap">
+        <include refid="findDtoSql" />
+        <where>
+            t.id = #{id}
         </where>
     </select>
 </mapper>

@@ -1,9 +1,8 @@
 package com.smallking.model;
 
-import com.baomidou.mybatisplus.annotation.TableField;
-import com.baomidou.mybatisplus.annotation.TableName;
 import com.smallking.common.BaseModel;
 import com.smallking.listener.CreateListenable;
+import com.smallking.listener.DeleteListenable;
 import com.smallking.listener.UpdateListenable;
 
 import javax.persistence.Column;
@@ -19,7 +18,7 @@ import java.util.Date;
  **/
 @Entity
 @Table(name = "sys_user")
-public class SysUser extends BaseModel implements CreateListenable, UpdateListenable {
+public class SysUser extends BaseModel implements CreateListenable, UpdateListenable, DeleteListenable {
 
 
     @Column(name = "name", columnDefinition = "VARCHAR")
@@ -60,6 +59,9 @@ public class SysUser extends BaseModel implements CreateListenable, UpdateListen
 
     @Column(name = "salt", columnDefinition = "VARCHAR")
     private String salt;
+
+    @Column(name = "user_status", columnDefinition = "VARCHAR")
+    private String userStatus;
 
     public String getName() {
         return name;
@@ -109,6 +111,7 @@ public class SysUser extends BaseModel implements CreateListenable, UpdateListen
         return status;
     }
 
+    @Override
     public void setStatus(String status) {
         this.status = status;
     }
@@ -167,5 +170,13 @@ public class SysUser extends BaseModel implements CreateListenable, UpdateListen
 
     public void setSalt(String salt) {
         this.salt = salt;
+    }
+
+    public String getUserStatus() {
+        return userStatus;
+    }
+
+    public void setUserStatus(String userStatus) {
+        this.userStatus = userStatus;
     }
 }

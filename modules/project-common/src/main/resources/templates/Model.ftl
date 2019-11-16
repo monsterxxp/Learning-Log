@@ -1,8 +1,9 @@
 package ${package_name}.model;
-import com.evada.inno.common.domain.BaseModel;
-import com.evada.inno.common.listener.ICreateListenable;
-import com.evada.inno.common.listener.IDeleteListenable;
-import com.evada.inno.common.listener.IModifyListenable;
+
+import com.smallking.common.BaseModel;
+import com.smallking.listener.CreateListenable;
+import com.smallking.listener.DeleteListenable;
+import com.smallking.listener.UpdateListenable;
 import org.hibernate.annotations.Where;
 import javax.persistence.*;
 import java.util.Date;
@@ -16,7 +17,7 @@ import java.util.Date;
 @Table(name="${table_name_small}")
 @Where(clause = "status > '0'")
 @Inheritance(strategy= InheritanceType.SINGLE_TABLE)
-public class ${table_name} extends BaseModel implements ICreateListenable,IModifyListenable,IDeleteListenable {
+public class ${table_name} extends BaseModel implements CreateListenable, UpdateListenable, DeleteListenable {
 
     <#if model_column?exists>
         <#list model_column as model>

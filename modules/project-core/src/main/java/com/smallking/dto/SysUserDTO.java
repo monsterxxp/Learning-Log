@@ -1,4 +1,4 @@
-package com.smallking.model.dto;
+package com.smallking.dto;
 
 import com.smallking.model.SysUser;
 

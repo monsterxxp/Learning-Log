@@ -1,16 +1,17 @@
 package ${package_name}.service.impl;
-import com.evada.inno.core.service.impl.BaseServiceImpl;
+
 import ${package_name}.model.${table_name};
 import ${package_name}.repository.${table_name}Repository;
 import ${package_name}.service.I${table_name}Service;
-import ${package_name}.repository.mybatis.${table_name}DAO;
+import ${package_name}.dao.${table_name}DAO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import ${package_name}.dto.${table_name}DTO;
 import org.apache.commons.beanutils.BeanUtils;
-import com.evada.inno.core.enums.StatusEnum;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
+import com.smallking.enums.StatusEnum;
+import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.smallking.listener.DeleteListenable;
 
 /**
 * 描述：${table_annotation} 服务实现层
@@ -18,7 +19,7 @@ import org.springframework.data.domain.Pageable;
 * @date ${date}
 */
 @Service
-public class ${table_name}ServiceImpl extends BaseServiceImpl<${table_name}, String> implements I${table_name}Service {
+public class ${table_name}ServiceImpl implements I${table_name}Service {
 
     @Autowired
     private ${table_name}DAO ${table_name?uncap_first}DAO;
@@ -51,12 +52,23 @@ public class ${table_name}ServiceImpl extends BaseServiceImpl<${table_name}, Str
 
     /**
     * 描述：查询列表(分页)
+    * @param pageable  分页参数
     * @param ${table_name?uncap_first}DTO 实体DTO
-    * @param page  分页参数
     */
     @Override
-    public Page<${table_name}DTO> find${table_name}Page(${table_name}DTO ${table_name?uncap_first}DTO, Pageable page) throws Exception{
-        return ${table_name?uncap_first}DAO.find${table_name}Page(${table_name?uncap_first}DTO,page);
+    public IPage find${table_name}Page(Page pageable, ${table_name}DTO ${table_name?uncap_first}DTO) throws Exception{
+        return ${table_name?uncap_first}DAO.find${table_name}Page(pageable, ${table_name?uncap_first}DTO);
+    }
+
+    @Override
+    public void deleteById(String id) throws Exception {
+        ${table_name} ${table_name?uncap_first} = ${table_name?uncap_first}DAO.selectById(id);
+        if (${table_name?uncap_first} instanceof DeleteListenable) {
+            ${table_name?uncap_first}.setStatus(StatusEnum.DELETED.toString());
+            ${table_name?uncap_first}Repository.save(sysUser);
+        } else {
+            ${table_name?uncap_first}Repository.deleteById(id);
+        }
     }
 
 }

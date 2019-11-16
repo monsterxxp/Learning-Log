@@ -1,5 +1,6 @@
 package ${package_name}.repository;
-import com.evada.inno.core.repository.BaseJpaRepository;
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.stereotype.Repository;
 import ${package_name}.model.${table_name};
 
 /**
@@ -7,7 +8,8 @@ import ${package_name}.model.${table_name};
 * @author ${author}
 * @date ${date}
 */
-public interface ${table_name}Repository extends BaseJpaRepository<${table_name}, String> {
+@Repository
+public interface ${table_name}Repository extends JpaRepository<${table_name}, String> {
 
 
 

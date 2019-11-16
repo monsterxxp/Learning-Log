@@ -1,6 +1,8 @@
 package com.smallking.model;
+
 import com.smallking.common.BaseModel;
 import com.smallking.listener.CreateListenable;
+import com.smallking.listener.DeleteListenable;
 import com.smallking.listener.UpdateListenable;
 import org.hibernate.annotations.Where;
 import javax.persistence.*;
@@ -9,13 +11,13 @@ import java.util.Date;
 /**
 * 描述：会议室预订模型
 * @author WangShaoXiong
-* @date 2019/11/10
+* @date 2019/11/14
 */
 @Entity
 @Table(name="sys_dict_category")
 @Where(clause = "status > '0'")
 @Inheritance(strategy= InheritanceType.SINGLE_TABLE)
-public class SysDictCategory extends BaseModel implements CreateListenable, UpdateListenable {
+public class SysDictCategory extends BaseModel implements CreateListenable, UpdateListenable, DeleteListenable {
 
     /**
     *

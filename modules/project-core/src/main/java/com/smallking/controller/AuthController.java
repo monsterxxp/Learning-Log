@@ -1,19 +1,14 @@
 package com.smallking.controller;
 
 import cn.hutool.crypto.digest.DigestUtil;
-import cn.hutool.crypto.digest.MD5;
 import com.smallking.common.BizException;
 import com.smallking.common.Return;
-import com.smallking.model.SysUser;
-import com.smallking.model.dto.SysUserDTO;
+import com.smallking.dto.SysUserDTO;
 import io.swagger.annotations.Api;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.*;
-import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.apache.shiro.subject.Subject;
-import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 /**
