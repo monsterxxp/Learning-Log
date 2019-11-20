@@ -25,6 +25,6 @@ public interface ${table_name}DAO extends BaseMapper<${table_name}> {
     * @param pageable  分页参数
     * @param ${table_name?uncap_first}DTO  ${table_annotation}DTO
     */
-    Page<${table_name}DTO> find${table_name}Page(Page pageable, @Param("val") ${table_name}DTO ${table_name?uncap_first}DTO);
+    IPage<${table_name}DTO> find${table_name}Page(Page pageable, @Param("val") ${table_name}DTO ${table_name?uncap_first}DTO);
 
 }

@@ -30,6 +30,9 @@
             <if test="val.userStatus != '' and val.userStatus != null">
                 and t.user_status = #{val.userStatus}
             </if>
+            <if test="val.deptId != '' and val.deptId != null">
+                and t.dept_id = #{val.deptId}
+            </if>
         </where>
     </select>
     <select id="findDTOById" resultMap="sysUserDTOResultMap">

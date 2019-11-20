@@ -25,6 +25,6 @@ public interface SysDictCategoryDAO extends BaseMapper<SysDictCategory> {
     * @param pageable  分页参数
     * @param sysDictCategoryDTO  会议室预订DTO
     */
-    Page<SysDictCategoryDTO> findSysDictCategoryPage(Page pageable, @Param("val") SysDictCategoryDTO sysDictCategoryDTO);
+    IPage<SysDictCategoryDTO> findSysDictCategoryPage(Page pageable, @Param("val") SysDictCategoryDTO sysDictCategoryDTO);
 
 }

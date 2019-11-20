@@ -15,7 +15,6 @@ import com.smallking.common.Return;
 * @author ${author}
 * @date ${date}
 */
-@Rest(${table_name}
 @RestController
 @RequestMapping("/${table_name?uncap_first}")
 public class ${table_name}Controller {
@@ -28,7 +27,7 @@ public class ${table_name}Controller {
     * @param id  ${table_annotation}id
     */
     @GetMapping(value = "/{id}")
-    public Return<${table_name}DTO> findById(@PathVariable("id") String id)  {
+    public Return<${table_name}DTO> findById(@PathVariable("id") String id) throws Exception {
         return Return.ok(${table_name?uncap_first}Service.findDTOById(id));
     }
 
@@ -70,7 +69,7 @@ public class ${table_name}Controller {
     public Return<IPage> search(Query<${table_name}DTO> query) throws Exception{
         ${table_name}DTO ${table_name?uncap_first}DTO = (${table_name}DTO) query.getBean(${table_name}DTO.class);
         Page pageable = query.getPageable();
-        IPage page = ${table_name?uncap_first}Service.findSysDictCategoryPage(pageable, ${table_name?uncap_first}DTO);
+        IPage page = ${table_name?uncap_first}Service.find${table_name}Page(pageable, ${table_name?uncap_first}DTO);
         return Return.ok(page);
     }
 }

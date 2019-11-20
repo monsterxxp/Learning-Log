@@ -16,7 +16,7 @@ import java.util.Date;
  **/
 @Entity
 @Table(name = "sys_permission")
-public class SysPermission extends BaseModel implements CreateListenable, UpdateListenable {
+public class SysPermission extends BaseModel  {
 
     @Column(name = "name", columnDefinition = "VARCHAR")
     private String name;
@@ -27,8 +27,14 @@ public class SysPermission extends BaseModel implements CreateListenable, Update
     @Column(name = "description", columnDefinition = "VARCHAR")
     private String description;
 
+    @Column(name = "created_id", columnDefinition = "VARCHAR")
+    private String createdId;
+
     @Column(name = "created_time", columnDefinition = "TIMESTAMP")
     private Date createdTime;
+
+    @Column(name = "updated_id", columnDefinition = "VARCHAR")
+    private String updatedId;
 
     @Column(name = "updated_time", columnDefinition = "TIMESTAMP")
     private Date updatedTime;
@@ -63,22 +69,34 @@ public class SysPermission extends BaseModel implements CreateListenable, Update
         this.description = description;
     }
 
-    @Override
+    public String getCreatedId() {
+        return createdId;
+    }
+
+    public void setCreatedId(String createdId) {
+        this.createdId = createdId;
+    }
+
     public Date getCreatedTime() {
         return createdTime;
     }
 
-    @Override
     public void setCreatedTime(Date createdTime) {
         this.createdTime = createdTime;
     }
 
-    @Override
+    public String getUpdatedId() {
+        return updatedId;
+    }
+
+    public void setUpdatedId(String updatedId) {
+        this.updatedId = updatedId;
+    }
+
     public Date getUpdatedTime() {
         return updatedTime;
     }
 
-    @Override
     public void setUpdatedTime(Date updatedTime) {
         this.updatedTime = updatedTime;
     }

@@ -30,8 +30,14 @@ public class SysUser extends BaseModel implements CreateListenable, UpdateListen
     @Column(name = "password", columnDefinition = "VARCHAR")
     private String password;
 
+    @Column(name = "created_id", columnDefinition = "VARCHAR")
+    private String createdId;
+
     @Column(name = "created_time", columnDefinition = "TIMESTAMP")
     private Date createdTime;
+
+    @Column(name = "updated_id", columnDefinition = "VARCHAR")
+    private String updatedId;
 
     @Column(name = "updated_time", columnDefinition = "TIMESTAMP")
     private Date updatedTime;
@@ -88,6 +94,16 @@ public class SysUser extends BaseModel implements CreateListenable, UpdateListen
     }
 
     @Override
+    public String getCreatedId() {
+        return createdId;
+    }
+
+    @Override
+    public void setCreatedId(String createdId) {
+        this.createdId = createdId;
+    }
+
+    @Override
     public Date getCreatedTime() {
         return createdTime;
     }
@@ -95,6 +111,16 @@ public class SysUser extends BaseModel implements CreateListenable, UpdateListen
     @Override
     public void setCreatedTime(Date createdTime) {
         this.createdTime = createdTime;
+    }
+
+    @Override
+    public String getUpdatedId() {
+        return updatedId;
+    }
+
+    @Override
+    public void setUpdatedId(String updatedId) {
+        this.updatedId = updatedId;
     }
 
     @Override

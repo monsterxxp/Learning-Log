@@ -65,7 +65,7 @@ public class ${table_name}ServiceImpl implements I${table_name}Service {
         ${table_name} ${table_name?uncap_first} = ${table_name?uncap_first}DAO.selectById(id);
         if (${table_name?uncap_first} instanceof DeleteListenable) {
             ${table_name?uncap_first}.setStatus(StatusEnum.DELETED.toString());
-            ${table_name?uncap_first}Repository.save(sysUser);
+            ${table_name?uncap_first}Repository.save(${table_name?uncap_first});
         } else {
             ${table_name?uncap_first}Repository.deleteById(id);
         }

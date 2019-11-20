@@ -13,4 +13,8 @@ public interface UpdateListenable {
     void setUpdatedTime(Date val);
 
     Date getUpdatedTime();
+
+    void setUpdatedId(String userId);
+
+    String getUpdatedId();
 }

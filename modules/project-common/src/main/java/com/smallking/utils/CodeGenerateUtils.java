@@ -20,9 +20,9 @@ public class CodeGenerateUtils {
     private final String AUTHOR = "WangShaoXiong";
     private final String CURRENT_DATE = new SimpleDateFormat("yyyy/MM/dd").format(new Date());
     /** 表名称 **/
-    private final String tableName = "sys_dict_category";
+    private final String tableName = "sys_dept";
     private final String packageName = "com.smallking";
-    private final String tableAnnotation = "会议室预订";
+    private final String tableAnnotation = "组织结构表";
     private final String URL = "jdbc:postgresql://localhost:5432/postgres";
     private final String USER = "postgres";
     private final String PASSWORD = "888888";

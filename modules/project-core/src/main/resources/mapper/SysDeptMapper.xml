@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.smallking.dao.SysDeptDAO">
+
+    <resultMap id="SysDeptDTOResultMap" type="com.smallking.dto.SysDeptDTO"></resultMap>
+
+    <sql id="findDtoSql">
+        select * from (
+        select * from  sys_dept temp
+        ) t
+    </sql>
+
+    <select id="findDTOById" parameterType="String" resultMap="SysDeptDTOResultMap">
+        <include refid="findDtoSql"></include>
+        <where>
+            and t.id = #{id}
+        </where>
+    </select>
+
+    <select id="findSysDeptPage" parameterType="com.smallking.dto.SysDeptDTO" resultMap="SysDeptDTOResultMap">
+        <include refid="findDtoSql" />
+        <where>
+
+        </where>
+    </select>
+    <select id="findSysDeptList" parameterType="com.smallking.dto.SysDeptDTO" resultType="com.smallking.dto.SysDeptDTO">
+        <include refid="findDtoSql" />
+        <where>
+
+        </where>
+    </select>
+
+</mapper>

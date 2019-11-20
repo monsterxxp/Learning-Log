@@ -20,7 +20,7 @@
     <select id="findSysDictCategoryPage" parameterType="com.smallking.dto.SysDictCategoryDTO" resultMap="SysDictCategoryDTOResultMap">
         <include refid="findDtoSql" />
         <where>
-
+            t.status != '0'
         </where>
     </select>
 

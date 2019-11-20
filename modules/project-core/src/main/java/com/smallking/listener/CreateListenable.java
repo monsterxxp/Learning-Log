@@ -13,4 +13,8 @@ public interface CreateListenable {
     void setCreatedTime(Date val);
 
     Date getCreatedTime();
+
+    void setCreatedId(String userId);
+
+    String getCreatedId();
 }

@@ -38,6 +38,7 @@ public class SysDictCategoryServiceImpl implements ISysDictCategoryService {
         SysDictCategory sysDictCategory = new SysDictCategory();
         BeanUtils.copyProperties(sysDictCategory,sysDictCategoryDTO);
         sysDictCategory.setStatus(StatusEnum.ENABLE.toString());
+        sysDictCategory.setIsUpdate("1");
         sysDictCategory = sysDictCategoryRepository.saveAndFlush(sysDictCategory);
         return this.findDTOById(sysDictCategory.getId());
     }

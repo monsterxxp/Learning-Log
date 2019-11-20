@@ -9,75 +9,49 @@ import javax.persistence.*;
 import java.util.Date;
 
 /**
-* 描述：会议室预订模型
+* 描述：数据字典表模型
 * @author WangShaoXiong
-* @date 2019/11/14
+* @date 2019/11/16
 */
 @Entity
-@Table(name="sys_dict_category")
+@Table(name="sys_dict")
 @Where(clause = "status > '0'")
 @Inheritance(strategy= InheritanceType.SINGLE_TABLE)
-public class SysDictCategory extends BaseModel implements CreateListenable, UpdateListenable, DeleteListenable {
+public class SysDict extends BaseModel implements CreateListenable, UpdateListenable, DeleteListenable {
 
-    /**
-    *
-    */
     @Column(name = "code",columnDefinition = "VARCHAR")
     private String code;
 
-
-    /**
-    *
-    */
     @Column(name = "name",columnDefinition = "VARCHAR")
     private String name;
 
+    @Column(name = "category_code",columnDefinition = "VARCHAR")
+    private String categoryCode;
 
-    /**
-    *
-    */
-    @Column(name = "created_time",columnDefinition = "TIMESTAMP")
-    private Date createdTime;
-
-
-    /**
-    *
-    */
-    @Column(name = "updated_time",columnDefinition = "TIMESTAMP")
-    private Date updatedTime;
-
-
-    /**
-    *
-    */
-    @Column(name = "status",columnDefinition = "VARCHAR")
-    private String status;
-
-
-    /**
-    *
-    */
-    @Column(name = "is_update",columnDefinition = "VARCHAR")
-    private String isUpdate;
-
-
-    /**
-    *
-    */
     @Column(name = "created_id",columnDefinition = "VARCHAR")
     private String createdId;
 
+    @Column(name = "created_time",columnDefinition = "TIMESTAMP")
+    private Date createdTime;
 
-    /**
-    *
-    */
     @Column(name = "updated_id",columnDefinition = "VARCHAR")
     private String updatedId;
 
+    @Column(name = "updated_time",columnDefinition = "TIMESTAMP")
+    private Date updatedTime;
 
-    /**
-    *
-    */
+    @Column(name = "status",columnDefinition = "VARCHAR")
+    private String status;
+
+    @Column(name = "is_update",columnDefinition = "VARCHAR")
+    private String isUpdate;
+
+    @Column(name = "sort",columnDefinition = "NUMERIC")
+    private Integer sort;
+
+    @Column(name = "parent_id",columnDefinition = "VARCHAR")
+    private String parentId;
+
     @Column(name = "description",columnDefinition = "VARCHAR")
     private String description;
 
@@ -100,24 +74,13 @@ public class SysDictCategory extends BaseModel implements CreateListenable, Upda
         this.name = name;
     }
 
-    @Override
-    public Date getCreatedTime() {
-        return createdTime;
+
+    public String getCategoryCode() {
+        return this.categoryCode;
     }
 
-    @Override
-    public void setCreatedTime(Date createdTime) {
-        this.createdTime = createdTime;
-    }
-
-    @Override
-    public Date getUpdatedTime() {
-        return updatedTime;
-    }
-
-    @Override
-    public void setUpdatedTime(Date updatedTime) {
-        this.updatedTime = updatedTime;
+    public void setCategoryCode(String categoryCode) {
+        this.categoryCode = categoryCode;
     }
 
     @Override
@@ -131,6 +94,16 @@ public class SysDictCategory extends BaseModel implements CreateListenable, Upda
     }
 
     @Override
+    public Date getCreatedTime() {
+        return createdTime;
+    }
+
+    @Override
+    public void setCreatedTime(Date createdTime) {
+        this.createdTime = createdTime;
+    }
+
+    @Override
     public String getUpdatedId() {
         return updatedId;
     }
@@ -138,6 +111,16 @@ public class SysDictCategory extends BaseModel implements CreateListenable, Upda
     @Override
     public void setUpdatedId(String updatedId) {
         this.updatedId = updatedId;
+    }
+
+    @Override
+    public Date getUpdatedTime() {
+        return updatedTime;
+    }
+
+    @Override
+    public void setUpdatedTime(Date updatedTime) {
+        this.updatedTime = updatedTime;
     }
 
     public String getStatus() {
@@ -157,15 +140,27 @@ public class SysDictCategory extends BaseModel implements CreateListenable, Upda
         this.isUpdate = isUpdate;
     }
 
+    public Integer getSort() {
+        return sort;
+    }
+
+    public void setSort(Integer sort) {
+        this.sort = sort;
+    }
+
+    public String getParentId() {
+        return this.parentId;
+    }
+
+    public void setParentId(String parentId) {
+        this.parentId = parentId;
+    }
 
     public String getDescription() {
-        return this.description;
+        return description;
     }
 
     public void setDescription(String description) {
         this.description = description;
     }
-
-
-
 }

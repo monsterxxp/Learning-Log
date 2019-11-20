@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.smallking.dao.SysDictDAO">
+
+    <resultMap id="SysDictDTOResultMap" type="com.smallking.dto.SysDictDTO"></resultMap>
+
+    <sql id="findDtoSql">
+        select * from (
+        select * from  sys_dict temp
+        ) t
+    </sql>
+
+    <select id="findDTOById" parameterType="java.lang.String" resultMap="SysDictDTOResultMap">
+        <include refid="findDtoSql"></include>
+        <where>
+            and t.id = #{id}
+        </where>
+    </select>
+
+    <select id="findByCategoryCode" parameterType="java.lang.String" resultMap="SysDictDTOResultMap">
+        <include refid="findDtoSql"></include>
+        <where>
+            and t.category_code = #{categoryCode}
+        </where>
+    </select>
+
+    <select id="findSysDictPage" parameterType="com.smallking.dto.SysDictDTO" resultMap="SysDictDTOResultMap">
+        <include refid="findDtoSql" />
+        <where>
+            t.status != '0'
+            <if test="val.code != '' and val.code != null">
+                and upper(t.code) like CONCAT('%',upper(#{val.code}),'%')
+                or upper(t.name) like CONCAT('%',upper(#{val.code}),'%')
+
+            </if>
+            <if test="val.categoryCode != '' and val.categoryCode != null">
+                and t.category_code = #{val.categoryCode}
+            </if>
+            order by t.sort asc
+        </where>
+    </select>
+
+</mapper>

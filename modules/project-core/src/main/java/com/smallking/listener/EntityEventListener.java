@@ -1,5 +1,9 @@
 package com.smallking.listener;
 
+import com.smallking.model.SysUser;
+import org.apache.shiro.SecurityUtils;
+import org.apache.shiro.session.Session;
+
 import javax.persistence.PrePersist;
 import javax.persistence.PreRemove;
 import javax.persistence.PreUpdate;
@@ -23,7 +27,11 @@ public class EntityEventListener {
     */
     @PrePersist
     public void prePersist(Object entity) {
+        String currentUserId = getUserId();
         if (entity instanceof CreateListenable) {
+            if (((CreateListenable) entity).getCreatedId()== null) {
+                ((CreateListenable) entity).setCreatedId(currentUserId);
+            }
             if (((CreateListenable) entity).getCreatedTime() == null) {
                 ((CreateListenable) entity).setCreatedTime(new Date(System.currentTimeMillis()));
             }
@@ -37,11 +45,17 @@ public class EntityEventListener {
      */
     @PreUpdate
     public void preUpdate(Object entity) {
+        String currentUserId = getUserId();
         if (entity instanceof UpdateListenable) {
-            if (((UpdateListenable) entity).getUpdatedTime() == null) {
-                ((UpdateListenable) entity).setUpdatedTime(new Date(System.currentTimeMillis()));
-            }
+            ((UpdateListenable) entity).setUpdatedId(currentUserId);
+            ((UpdateListenable) entity).setUpdatedTime(new Date(System.currentTimeMillis()));
         }
+    }
+
+    private String getUserId() {
+        Session session = SecurityUtils.getSubject().getSession();
+        SysUser user = (SysUser) session.getAttribute("USER_SESSION");
+        return user.getId();
     }
 
     @PreRemove
