@@ -10,7 +10,7 @@
         ) t
     </sql>
 
-    <select id="findDTOById" parameterType="String" resultMap="SysDictCategoryDTOResultMap">
+    <select id="findDTOById" parameterType="string" resultMap="SysDictCategoryDTOResultMap">
         <include refid="findDtoSql"></include>
         <where>
             and t.id = #{id}

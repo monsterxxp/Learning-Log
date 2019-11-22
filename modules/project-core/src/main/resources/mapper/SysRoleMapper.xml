@@ -1,19 +1,30 @@
 <?xml version="1.0" encoding="UTF-8" ?>
-<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
-        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.smallking.dao.SysRoleDAO">
 
-    <resultMap id="sysRoleResultMap" type="com.smallking.model.SysRole"></resultMap>
+    <resultMap id="SysRoleDTOResultMap" type="com.smallking.dto.SysRoleDTO"></resultMap>
 
     <sql id="findDtoSql">
         select * from (
-        select temp.*
-        from sys_role temp
+        select * from  sys_role temp
         ) t
     </sql>
 
-    <select id="findByAccount" parameterType="string" resultMap="sysRoleResultMap">
+    <select id="findDTOById" parameterType="string" resultMap="SysRoleDTOResultMap">
+        <include refid="findDtoSql"></include>
+        <where>
+            and t.id = #{id}
+        </where>
+    </select>
+
+    <select id="findSysRolePage" parameterType="com.smallking.dto.SysRoleDTO" resultMap="SysRoleDTOResultMap">
+        <include refid="findDtoSql" />
+        <where>
+            t.status != '0'
+        </where>
+    </select>
+
+    <select id="findByAccount" parameterType="string" resultMap="SysRoleDTOResultMap">
         select sr.*
         from sys_role sr
         left join sys_role_user sru on sr.id = sru.role_id

@@ -5,6 +5,7 @@ import com.smallking.model.SysDept;
 import com.smallking.repository.SysDeptRepository;
 import com.smallking.service.ISysDeptService;
 import com.smallking.dao.SysDeptDAO;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import com.smallking.dto.SysDeptDTO;
@@ -80,9 +81,14 @@ public class SysDeptServiceImpl implements ISysDeptService {
     public List<TreeModel<SysDeptDTO>> findSysDeptTree(SysDeptDTO sysDeptDTO) {
         List<SysDeptDTO> depts = sysDeptDAO.findSysDeptList(sysDeptDTO);
         List<TreeModel<SysDeptDTO>> list = new ArrayList<>();
+        List<SysDeptDTO> rootNodes = new ArrayList<>();
+        if (StringUtils.isNotEmpty(sysDeptDTO.getName())) {
+            rootNodes = depts;
+        } else {
+            // 获取主节点
+            rootNodes =  depts.stream().filter(dept -> "0".equals(dept.getParentId())).collect(Collectors.toList());
+        }
 
-        // 获取主节点
-        List<SysDeptDTO> rootNodes = depts.stream().filter(dept -> "0".equals(dept.getParentId())).collect(Collectors.toList());
         rootNodes.forEach(rootNode -> {
             TreeModel<SysDeptDTO> tree = new TreeModel<>();
             tree.setId(rootNode.getId());
@@ -91,7 +97,9 @@ public class SysDeptServiceImpl implements ISysDeptService {
             tree.setSort(rootNode.getSort());
             tree.setData(rootNode);
             // 组装树
-            initTree(tree, depts);
+            if (StringUtils.isEmpty(sysDeptDTO.getName())) {
+                initTree(tree, depts);
+            }
             list.add(tree);
         });
 

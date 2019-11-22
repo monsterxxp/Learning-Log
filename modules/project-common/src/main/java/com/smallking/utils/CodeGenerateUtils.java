@@ -20,9 +20,9 @@ public class CodeGenerateUtils {
     private final String AUTHOR = "WangShaoXiong";
     private final String CURRENT_DATE = new SimpleDateFormat("yyyy/MM/dd").format(new Date());
     /** 表名称 **/
-    private final String tableName = "sys_dept";
+    private final String tableName = "sys_menu";
     private final String packageName = "com.smallking";
-    private final String tableAnnotation = "组织结构表";
+    private final String tableAnnotation = "菜单表";
     private final String URL = "jdbc:postgresql://localhost:5432/postgres";
     private final String USER = "postgres";
     private final String PASSWORD = "888888";
@@ -61,8 +61,27 @@ public class CodeGenerateUtils {
             generateControllerFile(resultSet);
             //生成DTO文件
             generateDTOFile(resultSet);
+            //生成前端VUE API文件
+            generateApilFile(resultSet);
+            List<DBColumnDefinition> columnDefinitionList = new ArrayList<>();
+            DBColumnDefinition columnDefinition = null;
+            while(resultSet.next()){
+                //id字段略过
+                if(resultSet.getString("COLUMN_NAME").equals("id")) continue;
+                columnDefinition = new DBColumnDefinition();
+                columnDefinition.setColumnName(resultSet.getString("COLUMN_NAME"));
+                columnDefinition.setColumnType(resultSet.getString("TYPE_NAME"));
+                columnDefinition.setChangeColumnName(replaceUnderLineAndUpperCase(resultSet.getString("COLUMN_NAME")));
+                columnDefinition.setColumnComment(resultSet.getString("REMARKS"));
+                columnDefinitionList.add(columnDefinition);
+            }
             //生成Model文件
-            generateModelFile(resultSet);
+            generateModelFile(resultSet, columnDefinitionList);
+            //生成前端VUE Index.vue文件
+            generateIndexFile(resultSet, columnDefinitionList);
+            //生成前端VUE FormDialog.vue文件
+            generateFormFile(resultSet, columnDefinitionList);
+
         } catch (Exception e) {
             throw new RuntimeException(e);
         }finally{
@@ -70,33 +89,55 @@ public class CodeGenerateUtils {
         }
     }
 
-    private void generateModelFile(ResultSet resultSet) throws Exception{
+    private void generateModelFile(ResultSet resultSet, List<DBColumnDefinition> columnDefinitionList) throws Exception{
 
         final String suffix = ".java";
         final String path = diskPath + changeTableName + suffix;
         final String templateName = "Model.ftl";
         File mapperFile = new File(path);
-        List<DBColumnDefinition> columnDefinitionList = new ArrayList<>();
-        DBColumnDefinition columnDefinition = null;
-        while(resultSet.next()){
-            //id字段略过
-            if(resultSet.getString("COLUMN_NAME").equals("id")) continue;
-            columnDefinition = new DBColumnDefinition();
-            columnDefinition.setColumnName(resultSet.getString("COLUMN_NAME"));
-            columnDefinition.setColumnType(resultSet.getString("TYPE_NAME"));
-            columnDefinition.setChangeColumnName(replaceUnderLineAndUpperCase(resultSet.getString("COLUMN_NAME")));
-            columnDefinition.setColumnComment(resultSet.getString("REMARKS"));
-            columnDefinitionList.add(columnDefinition);
-        }
+
         Map<String,Object> dataMap = new HashMap<>();
         dataMap.put("model_column", columnDefinitionList);
         generateFileByTemplate(templateName,mapperFile,dataMap);
 
     }
 
+    private void generateIndexFile(ResultSet resultSet, List<DBColumnDefinition> columnDefinitionList) throws Exception{
+
+        final String suffix = ".vue";
+        final String path = diskPath + "index" + suffix;
+        final String templateName = "Index.ftl";
+        File mapperFile = new File(path);
+        Map<String,Object> dataMap = new HashMap<>();
+        dataMap.put("model_column", columnDefinitionList);
+        generateFileByTemplate(templateName,mapperFile,dataMap);
+
+    }
+
+    private void generateFormFile(ResultSet resultSet, List<DBColumnDefinition> columnDefinitionList) throws Exception{
+
+        final String suffix = ".vue";
+        final String path = diskPath + "FormDialog" + suffix;
+        final String templateName = "FormDialog.ftl";
+        File mapperFile = new File(path);
+        Map<String,Object> dataMap = new HashMap<>();
+        dataMap.put("model_column", columnDefinitionList);
+        generateFileByTemplate(templateName,mapperFile,dataMap);
+
+    }
+
+    private void generateApilFile(ResultSet resultSet) throws Exception{
+        final String suffix = ".js";
+        final String path = diskPath + changeTableName + suffix;
+        final String templateName = "Api.ftl";
+        File mapperFile = new File(path);
+        Map<String,Object> dataMap = new HashMap<>();
+        generateFileByTemplate(templateName,mapperFile,dataMap);
+    }
+
     private void generateDTOFile(ResultSet resultSet) throws Exception{
         final String suffix = "DTO.java";
-        final String path = "/home/smallking/code/" + changeTableName + suffix;
+        final String path = diskPath + changeTableName + suffix;
         final String templateName = "DTO.ftl";
         File mapperFile = new File(path);
         Map<String,Object> dataMap = new HashMap<>();

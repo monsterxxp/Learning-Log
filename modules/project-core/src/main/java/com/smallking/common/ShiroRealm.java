@@ -2,6 +2,7 @@ package com.smallking.common;
 
 import com.smallking.dao.SysPermissionDAO;
 import com.smallking.dao.SysRoleDAO;
+import com.smallking.dto.SysRoleDTO;
 import com.smallking.model.SysPermission;
 import com.smallking.model.SysRole;
 import com.smallking.model.SysUser;
@@ -78,9 +79,9 @@ public class ShiroRealm extends AuthorizingRealm {
         SimpleAuthorizationInfo simpleAuthorizationInfo = new SimpleAuthorizationInfo();
 
         // 获取用户角色集
-        List<SysRole> roleList = sysRoleDao.findByAccount(account);
+        List<SysRoleDTO> roleList = sysRoleDao.findByAccount(account);
         Set<String> roleSet = new HashSet<>();
-        for (SysRole r : roleList) {
+        for (SysRoleDTO r : roleList) {
             roleSet.add(r.getCode());
         }
         simpleAuthorizationInfo.setRoles(roleSet);

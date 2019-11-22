@@ -10,7 +10,7 @@
         ) t
     </sql>
 
-    <select id="findDTOById" parameterType="String" resultMap="SysDeptDTOResultMap">
+    <select id="findDTOById" parameterType="string" resultMap="SysDeptDTOResultMap">
         <include refid="findDtoSql"></include>
         <where>
             and t.id = #{id}
@@ -20,13 +20,16 @@
     <select id="findSysDeptPage" parameterType="com.smallking.dto.SysDeptDTO" resultMap="SysDeptDTOResultMap">
         <include refid="findDtoSql" />
         <where>
-
+            t.status != '0'
         </where>
     </select>
     <select id="findSysDeptList" parameterType="com.smallking.dto.SysDeptDTO" resultType="com.smallking.dto.SysDeptDTO">
         <include refid="findDtoSql" />
         <where>
-
+            t.status != '0'
+            <if test="name != '' and name != null">
+                and upper(t.name) like CONCAT('%',upper(#{name}),'%')
+            </if>
         </where>
     </select>
 
