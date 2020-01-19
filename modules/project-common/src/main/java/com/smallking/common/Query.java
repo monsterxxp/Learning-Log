@@ -7,36 +7,40 @@ import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class Query<T> {
 
-    private long page = 1;
+    private long pageNo = 1;
 
-    private long limit = 20;
+    private long pageSize = 20;
 
     private String params;
 
-    private String sortItem;
+    private String sortField;
 
-    private boolean asc;
+    private String sortOrder;
+
+    private static Pattern humpPattern = Pattern.compile("[A-Z]");
 
     public Query() {
     }
 
-    public long getPage() {
-        return page;
+    public long getPageNo() {
+        return pageNo;
     }
 
-    public void setPage(long page) {
-        this.page = page;
+    public void setPageNo(long pageNo) {
+        this.pageNo = pageNo;
     }
 
-    public long getLimit() {
-        return limit;
+    public long getPageSize() {
+        return pageSize;
     }
 
-    public void setLimit(long limit) {
-        this.limit = limit;
+    public void setPageSize(long pageSize) {
+        this.pageSize = pageSize;
     }
 
     public String getParams() {
@@ -47,20 +51,20 @@ public class Query<T> {
         this.params = params;
     }
 
-    public String getSortItem() {
-        return sortItem;
+    public String getSortField() {
+        return sortField;
     }
 
-    public void setSortItem(String sortItem) {
-        this.sortItem = sortItem;
+    public void setSortField(String sortField) {
+        this.sortField = sortField;
     }
 
-    public boolean isAsc() {
-        return asc;
+    public String getSortOrder() {
+        return sortOrder;
     }
 
-    public void setAsc(boolean asc) {
-        this.asc = asc;
+    public void setSortOrder(String sortOrder) {
+        this.sortOrder = sortOrder;
     }
 
     public Object getBean(Class clazz) {
@@ -69,16 +73,31 @@ public class Query<T> {
 
     public Page getPageable() {
         Page<T> pageable = new Page<>();
-        pageable.setCurrent(page);
-        pageable.setSize(limit);
-        if (StringUtils.isNotEmpty(sortItem)) {
+        pageable.setCurrent(pageNo);
+        pageable.setSize(pageSize);
+        if (StringUtils.isNotEmpty(sortField)) {
             List<OrderItem> orderItems = new ArrayList<>();
             OrderItem orderItem = new OrderItem();
-            orderItem.setColumn(sortItem);
-            orderItem.setAsc(asc);
+            orderItem.setColumn(humpToLine(sortField));
+            if ("ascend".equals(sortOrder)) {
+                orderItem.setAsc(true);
+            } else {
+                orderItem.setAsc(false);
+            }
             orderItems.add(orderItem);
             pageable.setOrders(orderItems);
         }
         return pageable;
+    }
+
+    /** 驼峰转下划线*/
+    public static String humpToLine(String str) {
+        Matcher matcher = humpPattern.matcher(str);
+        StringBuffer sb = new StringBuffer();
+        while (matcher.find()) {
+            matcher.appendReplacement(sb, "_" + matcher.group(0).toLowerCase());
+        }
+        matcher.appendTail(sb);
+        return sb.toString();
     }
 }

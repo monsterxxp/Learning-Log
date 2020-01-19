@@ -1,8 +1,13 @@
 package com.smallking.service;
 
+import com.smallking.common.TreeModel;
+import com.smallking.dto.SysMenuDTO;
 import com.smallking.dto.SysRoleDTO;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.smallking.model.SysMenu;
+
+import java.util.List;
 
 /**
 * 描述：角色表 服务实现层接口
@@ -25,4 +30,7 @@ public interface ISysRoleService {
 
     void deleteById(String id) throws Exception;
 
+    IPage findRoleByUserId(Page pageable, SysRoleDTO sysRoleDTO) throws Exception;
+
+    List<TreeModel<SysMenu>> findAuthByRoleId(String id);
 }

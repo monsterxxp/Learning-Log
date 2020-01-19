@@ -8,6 +8,9 @@ import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Component;
+
+import java.util.List;
+
 /**
  * 描述：菜单表DAO 层
  * @author WangShaoXiong
@@ -27,4 +30,7 @@ public interface SysMenuDAO extends BaseMapper<SysMenu> {
     */
     IPage<SysMenuDTO> findSysMenuPage(Page pageable, SysMenuDTO sysMenuDTO);
 
+    List<SysMenuDTO> findSysMenuList(SysMenuDTO sysMenuDTO);
+
+    List<SysMenuDTO> findMenuByUserId(@Param("userId") String userId);
 }

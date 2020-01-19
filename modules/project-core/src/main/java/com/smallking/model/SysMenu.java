@@ -59,7 +59,7 @@ public class SysMenu extends BaseModel implements CreateListenable, UpdateListen
     */
 
     @Column(name = "sort",columnDefinition = "DECIMAL")
-    private Float sort;
+    private Integer sort;
 
     /**
     *逻辑删
@@ -116,8 +116,6 @@ public class SysMenu extends BaseModel implements CreateListenable, UpdateListen
     @Column(name = "updated_time",columnDefinition = "TIMESTAMP")
     private Date updatedTime;
 
-
-
     public String getName() {
         return this.name;
     }
@@ -125,7 +123,6 @@ public class SysMenu extends BaseModel implements CreateListenable, UpdateListen
     public void setName(String name) {
         this.name = name;
     }
-
 
     public String getCode() {
         return this.code;
@@ -135,7 +132,6 @@ public class SysMenu extends BaseModel implements CreateListenable, UpdateListen
         this.code = code;
     }
 
-
     public String getIcon() {
         return this.icon;
     }
@@ -143,7 +139,6 @@ public class SysMenu extends BaseModel implements CreateListenable, UpdateListen
     public void setIcon(String icon) {
         this.icon = icon;
     }
-
 
     public String getMenuUrl() {
         return this.menuUrl;
@@ -153,7 +148,6 @@ public class SysMenu extends BaseModel implements CreateListenable, UpdateListen
         this.menuUrl = menuUrl;
     }
 
-
     public String getParentId() {
         return this.parentId;
     }
@@ -162,24 +156,13 @@ public class SysMenu extends BaseModel implements CreateListenable, UpdateListen
         this.parentId = parentId;
     }
 
-
-
-    public Float getSort() {
-    return this.sort;
+    public Integer getSort() {
+        return sort;
     }
 
-    public void setSort(Float sort) {
-    this.sort = sort;
+    public void setSort(Integer sort) {
+        this.sort = sort;
     }
-
-    public String getStatus() {
-        return this.status;
-    }
-
-    public void setStatus(String status) {
-        this.status = status;
-    }
-
 
     public String getMenuType() {
         return this.menuType;
@@ -207,42 +190,52 @@ public class SysMenu extends BaseModel implements CreateListenable, UpdateListen
         this.component = component;
     }
 
-
-    public String getCreatedId() {
-        return this.createdId;
+    public String getStatus() {
+        return status;
     }
 
+    @Override
+    public void setStatus(String status) {
+        this.status = status;
+    }
+
+    @Override
+    public String getCreatedId() {
+        return createdId;
+    }
+
+    @Override
     public void setCreatedId(String createdId) {
         this.createdId = createdId;
     }
 
-
+    @Override
     public Date getCreatedTime() {
-        return this.createdTime;
+        return createdTime;
     }
 
+    @Override
     public void setCreatedTime(Date createdTime) {
         this.createdTime = createdTime;
     }
 
-
+    @Override
     public String getUpdatedId() {
-        return this.updatedId;
+        return updatedId;
     }
 
+    @Override
     public void setUpdatedId(String updatedId) {
         this.updatedId = updatedId;
     }
 
-
+    @Override
     public Date getUpdatedTime() {
-        return this.updatedTime;
+        return updatedTime;
     }
 
+    @Override
     public void setUpdatedTime(Date updatedTime) {
         this.updatedTime = updatedTime;
     }
-
-
-
 }

@@ -79,8 +79,8 @@ public class SysDictController {
      * 描述：根据CategoryCode 查询
      * @param categoryCode  数据字典所属分类categoryCode
      */
-    @GetMapping(value = "/{categoryCode}/findByCategoryCode")
-    public Return<List<SysDictDTO>> findByCategoryCode(@PathVariable("categoryCode") String categoryCode) throws Exception {
+    @GetMapping(value = "/findByCategoryCode")
+    public Return<List<SysDictDTO>> findByCategoryCode( String categoryCode) throws Exception {
         return Return.ok(sysDictService.findByCategoryCode(categoryCode));
     }
 }

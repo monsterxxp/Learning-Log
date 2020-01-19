@@ -1,7 +1,11 @@
 package com.smallking.controller;
 
+import cn.hutool.json.JSONArray;
+import cn.hutool.json.JSONObject;
+import cn.hutool.system.UserInfo;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.smallking.model.SysUserInfo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import com.smallking.common.Query;
@@ -26,11 +30,11 @@ public class SysUserController {
     private ISysUserService sysUserService;
 
     @GetMapping(value = "")
-    public Return<IPage> search(Query<SysUserDTO> query) {
+    public Return search(Query<SysUserDTO> query) {
         SysUserDTO sysUserDTO = (SysUserDTO) query.getBean(SysUserDTO.class);
         Page pageable = query.getPageable();
         IPage page = sysUserService.findPage(pageable, sysUserDTO);
-        return Return.ok(page);
+        return Return.page(page);
     }
 
     @PostMapping(value = "")
@@ -78,4 +82,13 @@ public class SysUserController {
         sysUserService.batchBulk(ids);
     }
 
+    @GetMapping(value = "/info")
+    public Return<SysUserInfo> findUserInfo() throws Exception {
+        return Return.ok(sysUserService.findUserInfo());
+    }
+
+    @GetMapping(value = "/nav")
+    public Return<JSONArray> nav(String token) throws Exception {
+        return Return.ok(sysUserService.findNav(token));
+    }
 }

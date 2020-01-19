@@ -8,7 +8,8 @@
 
     <sql id="findDtoSql">
         select * from (
-        select temp.*
+        select temp.*,
+        (select name from sys_dept sd where sd.id = temp.dept_id) as deptName
         from sys_user temp
         ) t
     </sql>
@@ -22,7 +23,7 @@
     <select id="findPage" parameterType="com.smallking.dto.SysUserDTO" resultMap="sysUserDTOResultMap">
         <include refid="findDtoSql" />
         <where>
-            t.status = '1'
+            t.status != '0'
             <if test="val.name != '' and val.name != null">
                 and upper(t.name) like CONCAT('%',upper(#{val.name}),'%')
                 or upper(t.account) like CONCAT('%',upper(#{val.name}),'%')

@@ -12,8 +12,8 @@ import javax.persistence.Table;
  * @date: 2019-08-01
  **/
 @Entity
-@Table(name = "sys_role_user")
-public class SysRoleUser extends BaseModel {
+@Table(name = "sys_role_relation")
+public class SysRoleRelation extends BaseModel {
 
     @Column(name = "role_id", columnDefinition = "VARCHAR")
     private String roleId;

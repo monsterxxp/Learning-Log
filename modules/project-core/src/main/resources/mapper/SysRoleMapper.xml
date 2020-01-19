@@ -31,4 +31,17 @@
         left join sys_user su on  su.id = sru.user_id
         where su.account = #{account}
     </select>
+    <select id="findRoleByUserId" parameterType="com.smallking.dto.SysRoleDTO" resultMap="SysRoleDTOResultMap">
+        select sr.* from sys_role sr
+        <where>
+            sr.status != '0'
+            <if test="val.userId != '' and val.userId != null">
+                and sr.id not in (select role_id from sys_role_relation srr where srr.user_id = #{val.userId})
+            </if>
+            <if test="val.name != '' and val.name != null">
+                and sr.name = #{val.name}
+            </if>
+        </where>
+
+    </select>
 </mapper>

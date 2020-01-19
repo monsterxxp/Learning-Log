@@ -1,9 +1,16 @@
 package com.smallking.service.impl;
 
+import com.smallking.common.TreeModel;
+import com.smallking.dto.SysMenuDTO;
+import com.smallking.model.SysMenu;
+import com.smallking.model.SysMenuRelation;
 import com.smallking.model.SysRole;
 import com.smallking.repository.SysRoleRepository;
+import com.smallking.service.ISysMenuRelationService;
+import com.smallking.service.ISysMenuService;
 import com.smallking.service.ISysRoleService;
 import com.smallking.dao.SysRoleDAO;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import com.smallking.dto.SysRoleDTO;
@@ -12,6 +19,10 @@ import com.smallking.enums.StatusEnum;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.smallking.listener.DeleteListenable;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.stream.Collectors;
 
 /**
 * 描述：角色表 服务实现层
@@ -26,6 +37,12 @@ public class SysRoleServiceImpl implements ISysRoleService {
 
     @Autowired
     private SysRoleRepository sysRoleRepository;
+
+    @Autowired
+    private ISysMenuService sysMenuService;
+
+    @Autowired
+    private ISysMenuRelationService sysMenuRelationService;
 
     @Override
     public SysRoleDTO findDTOById(String id) throws Exception {
@@ -68,6 +85,62 @@ public class SysRoleServiceImpl implements ISysRoleService {
             sysRoleRepository.save(sysRole);
         } else {
             sysRoleRepository.deleteById(id);
+        }
+    }
+
+    @Override
+    public IPage findRoleByUserId(Page pageable, SysRoleDTO sysRoleDTO) throws Exception {
+        return sysRoleDAO.findRoleByUserId(pageable, sysRoleDTO);
+    }
+
+    @Override
+    public List<TreeModel<SysMenu>> findAuthByRoleId(String id) {
+        List<SysMenu> menus = sysMenuService.findAll();
+        List<TreeModel<SysMenu>> list = new ArrayList<>();
+        List<SysMenu> rootNodes = menus.stream().filter(dept -> "0".equals(dept.getParentId())).collect(Collectors.toList());
+        List<String> menuIds = sysMenuRelationService.findByRoleId(id).stream().map(item -> item.getMenuId()).collect(Collectors.toList());
+
+        rootNodes.forEach(rootNode -> {
+            TreeModel<SysMenu> tree = new TreeModel<>();
+            tree.setKey(rootNode.getId());
+            tree.setTitle(rootNode.getName());
+            tree.setParentId(rootNode.getParentId());
+            tree.setSort(rootNode.getSort());
+            tree.setData(rootNode);
+            if (menuIds.contains(rootNode.getId())) {
+                tree.setCheck(true);
+            } else {
+                tree.setCheck(false);
+            }
+            initTree(tree, menus, menuIds);
+            list.add(tree);
+        });
+
+        return list;
+    }
+
+    private void initTree(TreeModel<SysMenu> tree, List<SysMenu> menus, List<String> menuIds) {
+        List<SysMenu> subNode = menus.stream().filter(menu -> tree.getKey().equals(menu.getParentId())).collect(Collectors.toList());
+        if (subNode.size() > 0) {
+            List<TreeModel<SysMenu>> subList = new ArrayList<>();
+            subNode.forEach(menu -> {
+                TreeModel<SysMenu> subTree = new TreeModel<>();
+                subTree.setKey(menu.getId());
+                subTree.setTitle(menu.getName());
+                subTree.setParentId(menu.getParentId());
+                subTree.setSort(menu.getSort());
+                subTree.setData(menu);
+                if (menuIds.contains(menu.getId())) {
+                    subTree.setCheck(true);
+                } else {
+                    subTree.setCheck(false);
+                }
+                subList.add(subTree);
+                initTree(subTree, menus, menuIds);
+            });
+            tree.setChildren(subList);
+        } else {
+            return;
         }
     }
 

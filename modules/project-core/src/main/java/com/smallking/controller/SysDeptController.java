@@ -77,7 +77,7 @@ public class SysDeptController {
     }
 
     /**
-     * 分页查询
+     * 组织树
      * @param query
      * @return
      * @throws Exception

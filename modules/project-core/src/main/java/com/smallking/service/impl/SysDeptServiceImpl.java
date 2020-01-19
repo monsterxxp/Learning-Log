@@ -91,8 +91,9 @@ public class SysDeptServiceImpl implements ISysDeptService {
 
         rootNodes.forEach(rootNode -> {
             TreeModel<SysDeptDTO> tree = new TreeModel<>();
-            tree.setId(rootNode.getId());
-            tree.setName(rootNode.getName());
+            tree.setKey(rootNode.getId());
+            tree.setValue(rootNode.getId());
+            tree.setTitle(rootNode.getName());
             tree.setParentId(rootNode.getParentId());
             tree.setSort(rootNode.getSort());
             tree.setData(rootNode);
@@ -107,14 +108,14 @@ public class SysDeptServiceImpl implements ISysDeptService {
     }
 
     private void initTree(TreeModel<SysDeptDTO> tree, List<SysDeptDTO> depts) {
-        List<SysDeptDTO> subNode = depts.stream().filter(dept -> tree.getId().equals(dept.getParentId())).collect(Collectors.toList());
+        List<SysDeptDTO> subNode = depts.stream().filter(dept -> tree.getKey().equals(dept.getParentId())).collect(Collectors.toList());
         if (subNode.size() > 0) {
-//            tree.setHasChildren(true);
             List<TreeModel<SysDeptDTO>> subList = new ArrayList<>();
             subNode.forEach(dept -> {
                 TreeModel<SysDeptDTO> subTree = new TreeModel<>();
-                subTree.setId(dept.getId());
-                subTree.setName(dept.getName());
+                subTree.setKey(dept.getId());
+                subTree.setValue(dept.getId());
+                subTree.setTitle(dept.getName());
                 subTree.setParentId(dept.getParentId());
                 subTree.setSort(dept.getSort());
                 subTree.setData(dept);

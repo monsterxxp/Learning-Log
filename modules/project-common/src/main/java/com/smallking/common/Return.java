@@ -1,6 +1,10 @@
 package com.smallking.common;
 
+import com.baomidou.mybatisplus.core.metadata.IPage;
+
 import java.io.Serializable;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * @description: 统一返回
@@ -11,7 +15,7 @@ public class Return<T> implements Serializable {
 
     private static final long serialVersionUID = 5203201995827748690L;
 
-    private T data;
+    private T result;
     private boolean success;
     private int code;
     private String message;
@@ -24,8 +28,8 @@ public class Return<T> implements Serializable {
         this.message = message;
     }
 
-    private Return(T data, boolean success, int code, String message) {
-        this.data = data;
+    private Return(T result, boolean success, int code, String message) {
+        this.result = result;
         this.success = success;
         this.code = code;
         this.message = message;
@@ -35,14 +39,27 @@ public class Return<T> implements Serializable {
      * 调用默认成功
      */
     public static <T> Return<T> ok(){
-        return new Return<T>(true, 20000, "返回成功");
+        return new Return<T>(true, 200, "返回成功");
     }
 
     /**
      * 调用默认成功
      */
-    public static <T> Return<T> ok(T data){
-        return new Return<T>(data, true, 20000, "返回成功");
+    public static <T> Return<T> ok(T result){
+        return new Return<T>(result, true, 200, "返回成功");
+    }
+
+    /**
+     * 分页返回
+     */
+    public static Return<Map<String, Object>> page(IPage page){
+        Map<String, Object> pageMap = new HashMap<>();
+        pageMap.put("data", page.getRecords());
+        pageMap.put("pageSize", page.getSize());
+        pageMap.put("pageNo", page.getCurrent());
+        pageMap.put("totalPage", page.getPages());
+        pageMap.put("totalCount", page.getTotal());
+        return new Return(pageMap, true, 200, "返回成功");
     }
 
     /**
@@ -55,8 +72,8 @@ public class Return<T> implements Serializable {
     /**
      * 自定义失败一
      */
-    public static <T> Return<T> error(T data, int code, String message){
-        return new Return<T>(data, false, code, message);
+    public static <T> Return<T> error(T result, int code, String message){
+        return new Return<T>(result, false, code, message);
     }
 
     /**
@@ -66,12 +83,12 @@ public class Return<T> implements Serializable {
         return new Return<T>(false, code, message);
     }
 
-    public T getData() {
-        return data;
+    public T getResult() {
+        return result;
     }
 
-    public void setData(T data) {
-        this.data = data;
+    public void setResult(T result) {
+        this.result = result;
     }
 
     public boolean isSuccess() {

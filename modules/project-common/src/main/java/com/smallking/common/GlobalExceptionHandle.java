@@ -26,7 +26,7 @@ public class GlobalExceptionHandle{
     @ExceptionHandler({BizException.class})
     public ErrorMessage handleBusinessException(BizException ex) throws IOException {
         logger.error(ex.getMessage(), ex);
-        String errorCode = HttpStatus.BAD_REQUEST.toString();
+        int errorCode = HttpStatus.BAD_REQUEST.value();
         return new ErrorMessage(errorCode, ex.getMessage());
     }
 
@@ -34,7 +34,7 @@ public class GlobalExceptionHandle{
     @ExceptionHandler({Exception.class})
     public ErrorMessage handleBusinessException(Exception ex) throws IOException {
         logger.error(ex.getMessage(), ex);
-        String errorCode = HttpStatus.BAD_REQUEST.toString();
+        int errorCode = HttpStatus.BAD_REQUEST.value();
         return new ErrorMessage(errorCode, "系统错误");
     }
 }

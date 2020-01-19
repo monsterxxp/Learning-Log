@@ -20,14 +20,14 @@ public class CodeGenerateUtils {
     private final String AUTHOR = "WangShaoXiong";
     private final String CURRENT_DATE = new SimpleDateFormat("yyyy/MM/dd").format(new Date());
     /** 表名称 **/
-    private final String tableName = "sys_menu";
+    private final String tableName = "sys_menu_relation";
     private final String packageName = "com.smallking";
-    private final String tableAnnotation = "菜单表";
+    private final String tableAnnotation = "权限关联表";
     private final String URL = "jdbc:postgresql://localhost:5432/postgres";
     private final String USER = "postgres";
     private final String PASSWORD = "888888";
     private final String DRIVER = "org.postgresql.Driver";
-    private final String diskPath = "/home/smallking/code/";
+    private final String diskPath = "E://CodeGenerate//";
     private final String changeTableName = replaceUnderLineAndUpperCase(tableName);
 
     public Connection getConnection() throws Exception{

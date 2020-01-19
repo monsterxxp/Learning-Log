@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.smallking.dao.SysMenuRelationDAO">
+
+    <resultMap id="SysMenuRelationDTOResultMap" type="com.smallking.dto.SysMenuRelationDTO"></resultMap>
+
+    <sql id="findDtoSql">
+        select * from (
+        select * from  sys_menu_relation temp
+        ) t
+    </sql>
+
+    <select id="findDTOById" parameterType="String" resultMap="SysMenuRelationDTOResultMap">
+        <include refid="findDtoSql"></include>
+        <where>
+            and t.id = #{id}
+        </where>
+    </select>
+
+    <select id="findSysMenuRelationPage" parameterType="com.smallking.dto.SysMenuRelationDTO" resultMap="SysMenuRelationDTOResultMap">
+        <include refid="findDtoSql" />
+        <where>
+
+        </where>
+    </select>
+
+</mapper>

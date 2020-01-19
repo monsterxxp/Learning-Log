@@ -1,8 +1,12 @@
 package com.smallking.service;
 
+import com.smallking.common.TreeModel;
 import com.smallking.dto.SysMenuDTO;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.smallking.model.SysMenu;
+
+import java.util.List;
 
 /**
 * 描述：菜单表 服务实现层接口
@@ -25,4 +29,9 @@ public interface ISysMenuService {
 
     void deleteById(String id) throws Exception;
 
+    List<TreeModel<SysMenuDTO>> findTree(SysMenuDTO sysMenuDTO);
+
+    List<SysMenuDTO> findMenuByUserId(String userId);
+
+    List<SysMenu> findAll();
 }

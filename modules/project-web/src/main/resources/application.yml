@@ -5,6 +5,9 @@ smallking:
   name: smallking
 
 spring:
+  jackson:
+    date-format: yyyy-MM-dd
+    time-zone: GMT+8
   main:
     allow-bean-definition-overriding: true
   thymeleaf:

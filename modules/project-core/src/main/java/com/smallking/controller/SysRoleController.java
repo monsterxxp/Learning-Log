@@ -1,5 +1,8 @@
 package com.smallking.controller;
 
+import com.smallking.common.TreeModel;
+import com.smallking.dto.SysMenuDTO;
+import com.smallking.model.SysMenu;
 import com.smallking.service.ISysRoleService;
 import com.smallking.model.SysRole;
 import com.smallking.dto.SysRoleDTO;
@@ -9,6 +12,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import com.smallking.common.Query;
 import com.smallking.common.Return;
+
+import java.util.List;
 
 /**
 * 描述：角色表控制层
@@ -21,6 +26,7 @@ public class SysRoleController {
 
     @Autowired
     private ISysRoleService sysRoleService;
+
 
     /**
     * 描述：根据Id 查询
@@ -71,5 +77,30 @@ public class SysRoleController {
         Page pageable = query.getPageable();
         IPage page = sysRoleService.findSysRolePage(pageable, sysRoleDTO);
         return Return.ok(page);
+    }
+
+    /**
+     * 查询指定用户所能关联的角色
+     * @param query
+     * @return
+     * @throws Exception
+     */
+    @GetMapping(value = "/findRoleByUserId")
+    public Return<IPage> findRoleByUserId(Query<SysRoleDTO> query) throws Exception{
+        SysRoleDTO sysRoleDTO = (SysRoleDTO) query.getBean(SysRoleDTO.class);
+        Page pageable = query.getPageable();
+        IPage page = sysRoleService.findRoleByUserId(pageable, sysRoleDTO);
+        return Return.ok(page);
+    }
+
+    /**
+     * 菜单树
+     * @return
+     * @throws Exception
+     */
+    @GetMapping(value = "/{id}/findAuthByRoleId")
+    public Return<List<TreeModel<SysMenu>>> findAuthByRoleId(@PathVariable("id") String id) throws Exception{
+        List<TreeModel<SysMenu>>  trees = sysRoleService.findAuthByRoleId(id);
+        return Return.ok(trees);
     }
 }

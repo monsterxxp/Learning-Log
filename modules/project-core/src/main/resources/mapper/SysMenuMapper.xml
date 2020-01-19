@@ -23,5 +23,22 @@
 
         </where>
     </select>
+    <select id="findSysMenuList" parameterType="com.smallking.dto.SysMenuDTO" resultMap="SysMenuDTOResultMap">
+        <include refid="findDtoSql" />
+        <where>
+            t.status != '0'
+            <if test="name != '' and name != null">
+                and upper(t.name) like CONCAT('%',upper(#{name}),'%')
+            </if>
+        </where>
+        order by sort asc
+    </select>
+    <select id="findMenuByUserId" parameterType="string" resultMap="SysMenuDTOResultMap">
+        <include refid="findDtoSql" />
+        where t.id in
+         (SELECT smr.menu_id from sys_menu_relation smr where smr.role_id in
+         (SELECT role_id from sys_role_relation srr where srr.user_id = #{userId}))
+        order by sort asc
+    </select>
 
 </mapper>

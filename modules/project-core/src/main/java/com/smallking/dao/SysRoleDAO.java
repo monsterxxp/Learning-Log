@@ -31,4 +31,6 @@ public interface SysRoleDAO extends BaseMapper<SysRole> {
     IPage<SysRoleDTO> findSysRolePage(Page pageable, @Param("val") SysRoleDTO sysRoleDTO);
 
     List<SysRoleDTO> findByAccount(@Param("account") String account);
+
+    IPage<SysRoleDTO> findRoleByUserId(Page pageable, @Param("val") SysRoleDTO sysRoleDTO);
 }

@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.smallking.dao.SysRoleRelationDAO">
+
+    <resultMap id="SysRoleRelationDTOResultMap" type="com.smallking.dto.SysRoleRelationDTO"></resultMap>
+
+    <sql id="findDtoSql">
+        select * from (
+        select *,
+         (select name from sys_user su where su.id = temp.user_id) userName,
+         (select name from sys_role sr where sr.id = temp.role_id) roleName,
+         (select code from sys_role sr where sr.id = temp.role_id) roleCode,
+         (select description from sys_role sr where sr.id = temp.role_id) description
+         from  sys_role_relation temp
+        ) t
+    </sql>
+
+    <select id="findDTOById" parameterType="String" resultMap="SysRoleRelationDTOResultMap">
+        <include refid="findDtoSql"></include>
+        <where>
+            and t.id = #{id}
+        </where>
+    </select>
+
+    <select id="findSysRoleRelationPage" parameterType="com.smallking.dto.SysRoleRelationDTO" resultMap="SysRoleRelationDTOResultMap">
+        <include refid="findDtoSql" />
+        <where>
+
+        </where>
+    </select>
+    <select id="findRoleRelationList" parameterType="com.smallking.dto.SysRoleRelationDTO" resultMap="SysRoleRelationDTOResultMap">
+        <include refid="findDtoSql" />
+        <where>
+            <if test="userId != '' and userId != null">
+                t.user_id = #{userId}
+            </if>
+        </where>
+    </select>
+
+</mapper>

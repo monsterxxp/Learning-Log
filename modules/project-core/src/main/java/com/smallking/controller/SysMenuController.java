@@ -1,5 +1,6 @@
 package com.smallking.controller;
 
+import com.smallking.common.TreeModel;
 import com.smallking.service.ISysMenuService;
 import com.smallking.model.SysMenu;
 import com.smallking.dto.SysMenuDTO;
@@ -9,6 +10,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import com.smallking.common.Query;
 import com.smallking.common.Return;
+
+import java.util.List;
 
 /**
 * 描述：菜单表控制层
@@ -71,5 +74,18 @@ public class SysMenuController {
         Page pageable = query.getPageable();
         IPage page = sysMenuService.findSysMenuPage(pageable, sysMenuDTO);
         return Return.ok(page);
+    }
+
+    /**
+     * 菜单树
+     * @param query
+     * @return
+     * @throws Exception
+     */
+    @GetMapping(value = "/tree")
+    public Return<List<TreeModel<SysMenuDTO>>> tree(Query<SysMenuDTO> query) throws Exception{
+        SysMenuDTO sysMenuDTO = (SysMenuDTO) query.getBean(SysMenuDTO.class);
+        List<TreeModel<SysMenuDTO>>  trees = sysMenuService.findTree(sysMenuDTO);
+        return Return.ok(trees);
     }
 }

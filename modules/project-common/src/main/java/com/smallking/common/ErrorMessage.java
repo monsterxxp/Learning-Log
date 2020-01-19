@@ -6,37 +6,37 @@ import java.util.LinkedHashMap;
 
 public class ErrorMessage extends LinkedHashMap<String, Object> implements Serializable {
     private static final long serialVersionUID = 811899486654614381L;
-    private String code;
+    private int code;
     private String message;
     private String moreInfo;
-    private Object data;
+    private Object result;
 
     private void setErrorMap() {
         HashMap messageMap = new HashMap();
         messageMap.put("code", this.code);
         messageMap.put("message", this.message);
         messageMap.put("moreInfo", this.moreInfo);
-        messageMap.put("data", this.data);
+        messageMap.put("result", this.result);
         this.put("error", messageMap);
     }
 
-    public ErrorMessage(String code, String message, String moreInfo) {
+    public ErrorMessage(int code, String message, String moreInfo) {
         this.setCode(code);
         this.setMessage(message);
         this.setMoreInfo(moreInfo);
         this.setErrorMap();
     }
 
-    public ErrorMessage(String code, String message) {
+    public ErrorMessage(int code, String message) {
         this.setCode(code);
         this.setMessage(message);
         this.setErrorMap();
     }
 
-    public ErrorMessage(String code, String message, Object data) {
+    public ErrorMessage(int code, String message, Object result) {
         this.setCode(code);
         this.setMessage(message);
-        this.setData(data);
+        this.setResult(result);
         this.setErrorMap();
     }
 
@@ -45,11 +45,11 @@ public class ErrorMessage extends LinkedHashMap<String, Object> implements Seria
         this.setErrorMap();
     }
 
-    public String getCode() {
-        return this.code;
+    public int getCode() {
+        return code;
     }
 
-    public void setCode(String code) {
+    public void setCode(int code) {
         this.code = code;
     }
 
@@ -74,11 +74,11 @@ public class ErrorMessage extends LinkedHashMap<String, Object> implements Seria
         return "error{ code='" + this.code + '\'' + ", message='" + this.message + '\'' + ", moreInfo='" + this.moreInfo + '\'' + '}';
     }
 
-    public Object getData() {
-        return this.data;
+    public Object getResult() {
+        return result;
     }
 
-    public void setData(Object data) {
-        this.data = data;
+    public void setResult(Object result) {
+        this.result = result;
     }
 }

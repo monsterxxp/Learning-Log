@@ -4,28 +4,30 @@ import java.util.List;
 
 public class TreeModel<T> {
 
-    private String id;
-    private String name;
+    private String key;
+    private String title;
+    private String value;
     private List<TreeModel<T>> children;
+    private boolean check;
 //    private boolean hasChildren;
     private T data;
     private String parentId;
     private Integer sort;
 
-    public String getId() {
-        return id;
+    public String getKey() {
+        return key;
     }
 
-    public void setId(String id) {
-        this.id = id;
+    public void setKey(String key) {
+        this.key = key;
     }
 
-    public String getName() {
-        return name;
+    public String getTitle() {
+        return title;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setTitle(String title) {
+        this.title = title;
     }
 
     public List<TreeModel<T>> getChildren() {
@@ -43,6 +45,15 @@ public class TreeModel<T> {
 //    public void setHasChildren(boolean hasChildren) {
 //        this.hasChildren = hasChildren;
 //    }
+
+
+    public boolean isCheck() {
+        return check;
+    }
+
+    public void setCheck(boolean check) {
+        this.check = check;
+    }
 
     public T getData() {
         return data;
@@ -66,5 +77,13 @@ public class TreeModel<T> {
 
     public void setSort(Integer sort) {
         this.sort = sort;
+    }
+
+    public String getValue() {
+        return value;
+    }
+
+    public void setValue(String value) {
+        this.value = value;
     }
 }
