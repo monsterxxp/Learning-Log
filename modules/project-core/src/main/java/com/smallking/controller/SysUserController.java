@@ -91,4 +91,9 @@ public class SysUserController {
     public Return<JSONArray> nav(String token) throws Exception {
         return Return.ok(sysUserService.findNav(token));
     }
+
+    @GetMapping(value = "/userList")
+    public Return<List<SysUser>> userList() throws Exception {
+        return Return.ok(sysUserService.findUserList());
+    }
 }

@@ -31,4 +31,8 @@ public interface ISysRoleRelationService {
     List<SysRoleRelationDTO> findRoleRelation(SysRoleRelationDTO sysRoleRelationDTO);
 
     List<SysRoleRelation> batchSysRoleRelation(List<SysRoleRelation> sysRoleRelations);
+
+    List<SysRoleRelation> findByUserId(String userId);
+
+    void deleteByUserId(String userId);
 }

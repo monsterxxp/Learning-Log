@@ -64,4 +64,11 @@ public class AuthController {
             throw new BizException("密码错误");
         }
     }
+
+    @RequestMapping(value = "/logout", method = RequestMethod.POST)
+    public @ResponseBody Return<Void> logout() {
+        Session session = SecurityUtils.getSubject().getSession();
+        session.removeAttribute("USER_SESSION");
+        return Return.ok();
+    }
 }

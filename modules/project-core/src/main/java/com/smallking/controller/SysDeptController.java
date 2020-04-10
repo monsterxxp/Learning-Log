@@ -53,6 +53,15 @@ public class SysDeptController {
     }
 
     /**
+     * 描述：批量删除部门
+     * @param ids 部门Id列表
+     */
+    @DeleteMapping(value = "/batchDelete")
+    public void batchDelete(@RequestBody List<String> ids) throws Exception {
+        sysDeptService.batchDelete(ids);
+    }
+
+    /**
     * 描述：更新组织结构表
     * @param id 组织结构表id
     */

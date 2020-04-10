@@ -31,4 +31,6 @@ public interface ISysMenuRelationService {
     List<SysMenuRelation> findByRoleId(String id);
 
     List<SysMenuRelation> batchCreateSysMenuRelation(String roleId, List<SysMenuRelation> sysMenuRelations);
+
+    void deleteByRoleId(String roleId);
 }

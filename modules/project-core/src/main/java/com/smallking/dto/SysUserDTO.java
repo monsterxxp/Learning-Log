@@ -3,6 +3,8 @@ package com.smallking.dto;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.smallking.model.SysUser;
 
+import java.util.List;
+
 /**
  * @description: 系统用户DTO
  * @author: smallking
@@ -16,6 +18,8 @@ public class SysUserDTO extends SysUser {
     private String deptName;
 
     private String token;
+
+    private List<String> roleIds;
 
     public String getDeptName() {
         return deptName;
@@ -36,5 +40,13 @@ public class SysUserDTO extends SysUser {
     @Override
     public String toString() {
         return super.toString();
+    }
+
+    public List<String> getRoleIds() {
+        return roleIds;
+    }
+
+    public void setRoleIds(List<String> roleIds) {
+        this.roleIds = roleIds;
     }
 }

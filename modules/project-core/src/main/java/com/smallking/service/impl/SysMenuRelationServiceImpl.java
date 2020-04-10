@@ -73,11 +73,17 @@ public class SysMenuRelationServiceImpl implements ISysMenuRelationService {
     }
 
     @Override
+    @Transactional
     public List<SysMenuRelation> batchCreateSysMenuRelation(String roleId, List<SysMenuRelation> sysMenuRelations) {
         // 删除原有权限关联，重新进行关联
-        sysMenuRelationRepository.deleteByRoleId(roleId);
+        sysMenuRelationRepository.deleteSysMenuRelationByRoleId(roleId);
         //关联权限
         return sysMenuRelationRepository.saveAll(sysMenuRelations);
+    }
+
+    @Override
+    public void deleteByRoleId(String roleId) {
+        sysMenuRelationRepository.deleteSysMenuRelationByRoleId(roleId);
     }
 
 }

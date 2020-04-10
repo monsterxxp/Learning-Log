@@ -1,6 +1,7 @@
 package com.smallking.common;
 
 import java.util.List;
+import java.util.Map;
 
 public class TreeModel<T> {
 
@@ -13,6 +14,7 @@ public class TreeModel<T> {
     private T data;
     private String parentId;
     private Integer sort;
+    private Map<String, Object> scopedSlots;
 
     public String getKey() {
         return key;
@@ -85,5 +87,13 @@ public class TreeModel<T> {
 
     public void setValue(String value) {
         this.value = value;
+    }
+
+    public Map<String, Object> getScopedSlots() {
+        return scopedSlots;
+    }
+
+    public void setScopedSlots(Map<String, Object> scopedSlots) {
+        this.scopedSlots = scopedSlots;
     }
 }

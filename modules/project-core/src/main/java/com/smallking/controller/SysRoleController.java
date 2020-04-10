@@ -56,6 +56,15 @@ public class SysRoleController {
     }
 
     /**
+     * 描述：批量刪除角色
+     * @param ids 用户ids
+     */
+    @DeleteMapping(value = "/batchBulk")
+    public void batchBulk(@RequestBody  List<String> ids) throws Exception {
+        sysRoleService.batchBulk(ids);
+    }
+
+    /**
     * 描述：更新角色表
     * @param id 角色表id
     */
@@ -72,11 +81,22 @@ public class SysRoleController {
     * @throws Exception
     */
     @GetMapping(value = "")
-    public Return<IPage> search(Query<SysRoleDTO> query) throws Exception{
+    public Return search(Query<SysRoleDTO> query) throws Exception{
         SysRoleDTO sysRoleDTO = (SysRoleDTO) query.getBean(SysRoleDTO.class);
         Page pageable = query.getPageable();
         IPage page = sysRoleService.findSysRolePage(pageable, sysRoleDTO);
-        return Return.ok(page);
+        return Return.page(page);
+    }
+
+    /**
+     * 获取所有角色
+     * @return
+     * @throws Exception
+     */
+    @GetMapping(value = "/findAll")
+    public Return<List<SysRole>> findAll() throws Exception{
+        List<SysRole> roles = sysRoleService.findAll();
+        return Return.ok(roles);
     }
 
     /**
@@ -102,5 +122,15 @@ public class SysRoleController {
     public Return<List<TreeModel<SysMenu>>> findAuthByRoleId(@PathVariable("id") String id) throws Exception{
         List<TreeModel<SysMenu>>  trees = sysRoleService.findAuthByRoleId(id);
         return Return.ok(trees);
+    }
+
+    /**
+     * 描述：更新角色数据权限
+     * @param id 角色id
+     * @param menuIds 菜单Id列表
+     */
+    @PutMapping(value = "/{id}/updateAuth")
+    public Return<List<TreeModel<SysMenu>>> updateAuth(@PathVariable("id") String id,@RequestBody List<String> menuIds) throws Exception {
+        return Return.ok(sysRoleService.updateAuth(id, menuIds));
     }
 }

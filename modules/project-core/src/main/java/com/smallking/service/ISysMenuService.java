@@ -34,4 +34,6 @@ public interface ISysMenuService {
     List<SysMenuDTO> findMenuByUserId(String userId);
 
     List<SysMenu> findAll();
+
+    void batchBulk(List<String> ids);
 }

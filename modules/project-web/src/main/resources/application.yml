@@ -6,7 +6,7 @@ smallking:
 
 spring:
   jackson:
-    date-format: yyyy-MM-dd
+    date-format: yyyy-MM-dd HH:mm:ss
     time-zone: GMT+8
   main:
     allow-bean-definition-overriding: true
@@ -32,9 +32,11 @@ spring:
   # Redis数据库索引（默认为0）
   database: 1
   # Redis服务器地址
-  host: localhost
+  host: 127.0.0.1
   # Redis服务器连接端口
   port: 6379
+  timeout: 2000s
+  password:
 
   mail:
     host: smtp.163.com
@@ -51,9 +53,9 @@ spring:
   datasource:
     druid:
       type: com.alibaba.druid.pool.DruidDataSource
-      driver-class-name: org.postgresql.Driver
-      url: jdbc:postgresql://localhost:5432/postgres
-      username: postgres
+      driver-class-name: com.mysql.jdbc.Driver
+      url: jdbc:mysql://localhost:3306/smallking?useUnicode=true&characterEncoding=UTF-8&useSSL=false
+      username: root
       password: 888888
       # 连接池配置
       initial-size: 5

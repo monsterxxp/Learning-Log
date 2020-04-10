@@ -1,5 +1,6 @@
 package com.smallking.service.impl;
 
+import com.google.common.collect.Maps;
 import com.smallking.common.TreeModel;
 import com.smallking.model.SysMenu;
 import com.smallking.model.SysUser;
@@ -20,6 +21,7 @@ import com.smallking.listener.DeleteListenable;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 /**
@@ -96,9 +98,13 @@ public class SysMenuServiceImpl implements ISysMenuService {
             TreeModel<SysMenuDTO> tree = new TreeModel<>();
             tree.setKey(rootNode.getId());
             tree.setTitle(rootNode.getName());
+            tree.setValue(rootNode.getId());
             tree.setParentId(rootNode.getParentId());
             tree.setSort(rootNode.getSort());
             tree.setData(rootNode);
+            Map<String, Object> slots = Maps.newHashMap();
+            slots.put("title", "title");
+            tree.setScopedSlots(slots);
             // 组装树
             if (StringUtils.isEmpty(sysMenuDTO.getName())) {
                 initTree(tree, menus);
@@ -119,6 +125,19 @@ public class SysMenuServiceImpl implements ISysMenuService {
         return sysMenuRepository.findAll();
     }
 
+    @Override
+    public void batchBulk(List<String> ids) {
+        List<SysMenu> userList = sysMenuDAO.selectBatchIds(ids);
+        if (new SysMenu() instanceof DeleteListenable) {
+            userList.forEach(user -> {
+                user.setStatus(StatusEnum.DELETED.toString());
+            });
+            sysMenuRepository.saveAll(userList);
+        } else {
+            sysMenuRepository.deleteInBatch(userList);
+        }
+    }
+
     private void initTree(TreeModel<SysMenuDTO> tree, List<SysMenuDTO> menus) {
         List<SysMenuDTO> subNode = menus.stream().filter(menu -> tree.getKey().equals(menu.getParentId())).collect(Collectors.toList());
         if (subNode.size() > 0) {
@@ -127,9 +146,13 @@ public class SysMenuServiceImpl implements ISysMenuService {
                 TreeModel<SysMenuDTO> subTree = new TreeModel<>();
                 subTree.setKey(menu.getId());
                 subTree.setTitle(menu.getName());
+                subTree.setValue(menu.getId());
                 subTree.setParentId(menu.getParentId());
                 subTree.setSort(menu.getSort());
                 subTree.setData(menu);
+                Map<String, Object> slots = Maps.newHashMap();
+                slots.put("title", "title");
+                subTree.setScopedSlots(slots);
                 subList.add(subTree);
                 initTree(subTree, menus);
             });

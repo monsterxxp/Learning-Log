@@ -9,6 +9,8 @@ import org.springframework.stereotype.Component;
 import com.smallking.model.SysUser;
 import com.smallking.dto.SysUserDTO;
 
+import java.util.List;
+
 /**
  * 系统用户DAO
  * @Author: smallking
@@ -23,4 +25,6 @@ public interface SysUserDAO extends BaseMapper<SysUser> {
     IPage findPage(Page pageable, @Param("val") SysUserDTO sysUserDTO);
 
     SysUserDTO findDTOById(@Param("id") String id);
+
+    List<SysUser> findAll();
 }

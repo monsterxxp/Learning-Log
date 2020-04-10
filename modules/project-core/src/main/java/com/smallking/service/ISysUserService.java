@@ -5,6 +5,7 @@ import cn.hutool.json.JSONObject;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.smallking.dto.SysUserDTO;
+import com.smallking.model.SysUser;
 import com.smallking.model.SysUserInfo;
 
 import java.util.List;
@@ -41,4 +42,6 @@ public interface ISysUserService {
     SysUserInfo findUserInfo() throws Exception;
 
     JSONArray findNav(String token) throws Exception;
+
+    List<SysUser> findUserList();
 }

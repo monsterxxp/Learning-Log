@@ -6,6 +6,7 @@ import com.smallking.dto.SysRoleDTO;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.smallking.model.SysMenu;
+import com.smallking.model.SysRole;
 
 import java.util.List;
 
@@ -33,4 +34,10 @@ public interface ISysRoleService {
     IPage findRoleByUserId(Page pageable, SysRoleDTO sysRoleDTO) throws Exception;
 
     List<TreeModel<SysMenu>> findAuthByRoleId(String id);
+
+    List<TreeModel<SysMenu>> updateAuth(String id, List<String> menuIds) throws Exception;
+
+    List<SysRole> findAll();
+
+    void batchBulk(List<String> ids) throws Exception;
 }

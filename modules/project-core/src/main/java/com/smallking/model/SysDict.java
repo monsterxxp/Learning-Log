@@ -46,11 +46,11 @@ public class SysDict extends BaseModel implements CreateListenable, UpdateListen
     @Column(name = "is_update",columnDefinition = "VARCHAR")
     private String isUpdate;
 
-    @Column(name = "sort",columnDefinition = "NUMERIC")
+    @Column(name = "sort",columnDefinition = "INT")
     private Integer sort;
 
-    @Column(name = "parent_id",columnDefinition = "VARCHAR")
-    private String parentId;
+    @Column(name = "parent_code",columnDefinition = "VARCHAR")
+    private String parentCode;
 
     @Column(name = "description",columnDefinition = "VARCHAR")
     private String description;
@@ -148,12 +148,12 @@ public class SysDict extends BaseModel implements CreateListenable, UpdateListen
         this.sort = sort;
     }
 
-    public String getParentId() {
-        return this.parentId;
+    public String getParentCode() {
+        return parentCode;
     }
 
-    public void setParentId(String parentId) {
-        this.parentId = parentId;
+    public void setParentCode(String parentCode) {
+        this.parentCode = parentCode;
     }
 
     public String getDescription() {

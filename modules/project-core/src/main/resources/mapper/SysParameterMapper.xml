@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.smallking.dao.SysParameterDAO">
+
+    <resultMap id="SysParameterDTOResultMap" type="com.smallking.dto.SysParameterDTO"></resultMap>
+
+    <sql id="findDtoSql">
+        select * from (
+        select * from  sys_parameter temp
+        ) t
+    </sql>
+
+    <select id="findDTOById" parameterType="String" resultMap="SysParameterDTOResultMap">
+        <include refid="findDtoSql"></include>
+        <where>
+            and t.id = #{id}
+        </where>
+    </select>
+
+    <select id="findSysParameterPage" parameterType="com.smallking.dto.SysParameterDTO" resultMap="SysParameterDTOResultMap">
+        <include refid="findDtoSql" />
+        <where>
+
+        </where>
+    </select>
+
+</mapper>

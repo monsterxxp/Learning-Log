@@ -6,7 +6,11 @@
 
     <sql id="findDtoSql">
         select * from (
-        select * from  sys_dict temp
+        select *,
+         (select id from sys_dict_category where code = temp.category_code) categoryId,
+         (select name from sys_dict_category where code = temp.category_code) categoryName,
+         (select name from sys_dict where category_code = temp.category_code and code = temp.parent_code) parentName
+         from  sys_dict temp
         ) t
     </sql>
 
@@ -20,8 +24,10 @@
     <select id="findByCategoryCode" parameterType="java.lang.String" resultMap="SysDictDTOResultMap">
         <include refid="findDtoSql"></include>
         <where>
+            t.status > '0'
             and t.category_code = #{categoryCode}
         </where>
+        order by t.sort asc
     </select>
 
     <select id="findSysDictPage" parameterType="com.smallking.dto.SysDictDTO" resultMap="SysDictDTOResultMap">

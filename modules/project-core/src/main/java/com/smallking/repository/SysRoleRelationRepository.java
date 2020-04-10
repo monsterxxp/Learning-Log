@@ -3,6 +3,8 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 import com.smallking.model.SysRoleRelation;
 
+import java.util.List;
+
 /**
 * 描述：角色关联表 Repository接口
 * @author WangShaoXiong
@@ -11,6 +13,7 @@ import com.smallking.model.SysRoleRelation;
 @Repository
 public interface SysRoleRelationRepository extends JpaRepository<SysRoleRelation, String> {
 
+    List<SysRoleRelation> findSysRoleRelationByUserId(String userId);
 
-
+    void deleteSysRoleRelationByUserId(String userId);
 }

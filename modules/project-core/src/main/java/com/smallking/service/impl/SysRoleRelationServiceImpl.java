@@ -76,6 +76,16 @@ public class SysRoleRelationServiceImpl implements ISysRoleRelationService {
         return sysRoleRelationRepository.saveAll(sysRoleRelations);
     }
 
+    @Override
+    public List<SysRoleRelation> findByUserId(String userId) {
+        return sysRoleRelationRepository.findSysRoleRelationByUserId(userId);
+    }
+
+    @Override
+    public void deleteByUserId(String userId) {
+        sysRoleRelationRepository.deleteSysRoleRelationByUserId(userId);
+    }
+
 }
 
 

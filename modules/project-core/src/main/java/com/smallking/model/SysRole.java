@@ -74,6 +74,11 @@ public class SysRole extends BaseModel implements CreateListenable, UpdateListen
     @Column(name = "status",columnDefinition = "VARCHAR")
     private String status;
 
+    /**
+     *逻辑删
+     */
+    @Column(name = "role_status",columnDefinition = "VARCHAR")
+    private String roleStatus;
 
 
     public String getName() {
@@ -147,6 +152,11 @@ public class SysRole extends BaseModel implements CreateListenable, UpdateListen
         this.status = status;
     }
 
+    public String getRoleStatus() {
+        return roleStatus;
+    }
 
-
+    public void setRoleStatus(String roleStatus) {
+        this.roleStatus = roleStatus;
+    }
 }

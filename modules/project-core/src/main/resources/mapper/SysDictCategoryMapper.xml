@@ -20,7 +20,10 @@
     <select id="findSysDictCategoryPage" parameterType="com.smallking.dto.SysDictCategoryDTO" resultMap="SysDictCategoryDTOResultMap">
         <include refid="findDtoSql" />
         <where>
-            t.status != '0'
+            t.status > '0'
+            <if test="val.name != '' and val.name != null">
+                and upper(t.name) like CONCAT('%',upper(#{val.name}),'%')
+            </if>
         </where>
     </select>
 

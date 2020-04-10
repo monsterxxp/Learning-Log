@@ -28,10 +28,14 @@ public interface ISysDeptService {
 
     void deleteById(String id) throws Exception;
 
+    void deleteByIds(List<String> ids) throws Exception;
+
     /**
      * 获取组织树
      * @param sysDeptDTO
      * @return
      */
     List<TreeModel<SysDeptDTO>> findSysDeptTree(SysDeptDTO sysDeptDTO);
+
+    void batchDelete(List<String> ids) throws Exception;
 }

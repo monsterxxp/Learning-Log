@@ -53,6 +53,15 @@ public class SysMenuController {
     }
 
     /**
+     * 描述：批量刪除角色
+     * @param ids 用户ids
+     */
+    @DeleteMapping(value = "/batchBulk")
+    public void batchBulk(@RequestBody  List<String> ids) throws Exception {
+        sysMenuService.batchBulk(ids);
+    }
+
+    /**
     * 描述：更新菜单表
     * @param id 菜单表id
     */

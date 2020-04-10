@@ -1,10 +1,12 @@
 package com.smallking.service.impl;
 
+import com.google.common.collect.Maps;
 import com.smallking.common.TreeModel;
 import com.smallking.model.SysDept;
 import com.smallking.repository.SysDeptRepository;
 import com.smallking.service.ISysDeptService;
 import com.smallking.dao.SysDeptDAO;
+import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -16,7 +18,9 @@ import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.smallking.listener.DeleteListenable;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 /**
@@ -78,6 +82,21 @@ public class SysDeptServiceImpl implements ISysDeptService {
     }
 
     @Override
+    public void deleteByIds(List<String> ids) throws Exception {
+        List<SysDept> sysDepts = sysDeptDAO.selectBatchIds(ids);
+        if (new SysDept() instanceof DeleteListenable) {
+            for (SysDept sysDept : sysDepts) {
+                sysDept.setStatus(StatusEnum.DELETED.toString());
+            }
+            sysDeptRepository.saveAll(sysDepts);
+        } else {
+            sysDeptRepository.deleteInBatch(sysDepts);
+        }
+
+
+    }
+
+    @Override
     public List<TreeModel<SysDeptDTO>> findSysDeptTree(SysDeptDTO sysDeptDTO) {
         List<SysDeptDTO> depts = sysDeptDAO.findSysDeptList(sysDeptDTO);
         List<TreeModel<SysDeptDTO>> list = new ArrayList<>();
@@ -97,6 +116,9 @@ public class SysDeptServiceImpl implements ISysDeptService {
             tree.setParentId(rootNode.getParentId());
             tree.setSort(rootNode.getSort());
             tree.setData(rootNode);
+            Map<String, Object> slots = Maps.newHashMap();
+            slots.put("title", "title");
+            tree.setScopedSlots(slots);
             // 组装树
             if (StringUtils.isEmpty(sysDeptDTO.getName())) {
                 initTree(tree, depts);
@@ -105,6 +127,24 @@ public class SysDeptServiceImpl implements ISysDeptService {
         });
 
         return list;
+    }
+
+    @Override
+    public void batchDelete(List<String> ids) throws Exception{
+        // 删除部门
+        this.deleteByIds(ids);
+        // 删除子部门
+        this.deleteSubDept(ids);
+
+    }
+
+    private void deleteSubDept(List<String> parentIds) throws Exception{
+        List<SysDept> sysDepts = sysDeptRepository.findByParentIdIn(parentIds);
+        if (CollectionUtils.isNotEmpty(sysDepts)) {
+            List<String> ids = sysDepts.stream().map(sysDept -> sysDept.getId()).collect(Collectors.toList());
+            this.deleteByIds(ids);
+            this.deleteSubDept(ids);
+        }
     }
 
     private void initTree(TreeModel<SysDeptDTO> tree, List<SysDeptDTO> depts) {
@@ -119,6 +159,9 @@ public class SysDeptServiceImpl implements ISysDeptService {
                 subTree.setParentId(dept.getParentId());
                 subTree.setSort(dept.getSort());
                 subTree.setData(dept);
+                Map<String, Object> slots = Maps.newHashMap();
+                slots.put("title", "title");
+                subTree.setScopedSlots(slots);
                 subList.add(subTree);
                 initTree(subTree, depts);
             });

@@ -16,7 +16,6 @@ public interface SysMenuRelationRepository extends JpaRepository<SysMenuRelation
 
     List<SysMenuRelation> findByRoleId(String roleId);
 
-    @Transactional
-    void deleteByRoleId(String roleId);
+    void deleteSysMenuRelationByRoleId(String roleId);
 
 }

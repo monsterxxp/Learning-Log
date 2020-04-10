@@ -1,10 +1,7 @@
 package com.smallking.common;
 
-import com.smallking.dao.SysPermissionDAO;
 import com.smallking.dao.SysRoleDAO;
 import com.smallking.dto.SysRoleDTO;
-import com.smallking.model.SysPermission;
-import com.smallking.model.SysRole;
 import com.smallking.model.SysUser;
 import com.smallking.service.ISysUserService;
 import org.apache.shiro.SecurityUtils;
@@ -28,9 +25,6 @@ public class ShiroRealm extends AuthorizingRealm {
 
     @Autowired
     protected SysRoleDAO sysRoleDao;
-
-    @Autowired
-    protected SysPermissionDAO sysPermissionDao;
     /**
      * 认证回调函数,登录时调用
      * 首先根据传入的用户名获取User信息；然后如果user为空，那么抛出没找到帐号异常UnknownAccountException；
@@ -86,12 +80,7 @@ public class ShiroRealm extends AuthorizingRealm {
         }
         simpleAuthorizationInfo.setRoles(roleSet);
 
-        // 获取用户权限集
-        List<SysPermission> permissionList = sysPermissionDao.findByAccount(account);
         Set<String> permissionSet = new HashSet<>();
-        for (SysPermission p : permissionList) {
-            permissionSet.add(p.getCode());
-        }
         simpleAuthorizationInfo.setStringPermissions(permissionSet);
         return simpleAuthorizationInfo;
     }

@@ -1,5 +1,6 @@
 package com.smallking.service.impl;
 
+import com.google.common.collect.Maps;
 import com.smallking.common.TreeModel;
 import com.smallking.dto.SysMenuDTO;
 import com.smallking.model.SysMenu;
@@ -22,6 +23,7 @@ import com.smallking.listener.DeleteListenable;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 /**
@@ -103,20 +105,56 @@ public class SysRoleServiceImpl implements ISysRoleService {
         rootNodes.forEach(rootNode -> {
             TreeModel<SysMenu> tree = new TreeModel<>();
             tree.setKey(rootNode.getId());
+            tree.setValue(rootNode.getId());
             tree.setTitle(rootNode.getName());
             tree.setParentId(rootNode.getParentId());
             tree.setSort(rootNode.getSort());
             tree.setData(rootNode);
+            tree.setCheck(false);
             if (menuIds.contains(rootNode.getId())) {
                 tree.setCheck(true);
             } else {
                 tree.setCheck(false);
             }
+            Map<String, Object> slots = Maps.newHashMap();
+            slots.put("title", "title");
+            tree.setScopedSlots(slots);
             initTree(tree, menus, menuIds);
             list.add(tree);
         });
 
         return list;
+    }
+
+    @Override
+    public List<TreeModel<SysMenu>> updateAuth(String id, List<String> menuIds) throws Exception {
+        List<SysMenuRelation> sysMenuRelations = new ArrayList<>();
+        menuIds.forEach(menuId -> {
+            SysMenuRelation sysMenuRelation = new SysMenuRelation();
+            sysMenuRelation.setRoleId(id);
+            sysMenuRelation.setMenuId(menuId);
+            sysMenuRelations.add(sysMenuRelation);
+        });
+        sysMenuRelationService.batchCreateSysMenuRelation(id, sysMenuRelations);
+        return this.findAuthByRoleId(id);
+    }
+
+    @Override
+    public List<SysRole> findAll() {
+        return sysRoleRepository.findAll();
+    }
+
+    @Override
+    public void batchBulk(List<String> ids) throws Exception {
+        List<SysRole> userList = sysRoleDAO.selectBatchIds(ids);
+        if (new SysRole() instanceof DeleteListenable) {
+            userList.forEach(user -> {
+                user.setStatus(StatusEnum.DELETED.toString());
+            });
+            sysRoleRepository.saveAll(userList);
+        } else {
+            sysRoleRepository.deleteInBatch(userList);
+        }
     }
 
     private void initTree(TreeModel<SysMenu> tree, List<SysMenu> menus, List<String> menuIds) {
@@ -127,14 +165,19 @@ public class SysRoleServiceImpl implements ISysRoleService {
                 TreeModel<SysMenu> subTree = new TreeModel<>();
                 subTree.setKey(menu.getId());
                 subTree.setTitle(menu.getName());
+                subTree.setValue(menu.getId());
                 subTree.setParentId(menu.getParentId());
                 subTree.setSort(menu.getSort());
                 subTree.setData(menu);
+                subTree.setCheck(false);
                 if (menuIds.contains(menu.getId())) {
                     subTree.setCheck(true);
                 } else {
                     subTree.setCheck(false);
                 }
+                Map<String, Object> slots = Maps.newHashMap();
+                slots.put("title", "title");
+                subTree.setScopedSlots(slots);
                 subList.add(subTree);
                 initTree(subTree, menus, menuIds);
             });

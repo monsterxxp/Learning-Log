@@ -58,7 +58,7 @@ public class SysMenu extends BaseModel implements CreateListenable, UpdateListen
     *排序
     */
 
-    @Column(name = "sort",columnDefinition = "DECIMAL")
+    @Column(name = "sort",columnDefinition = "INTEGER")
     private Integer sort;
 
     /**
@@ -115,6 +115,18 @@ public class SysMenu extends BaseModel implements CreateListenable, UpdateListen
     */
     @Column(name = "updated_time",columnDefinition = "TIMESTAMP")
     private Date updatedTime;
+
+    /**
+     *是否外链
+     */
+    @Column(name = "is_frame",columnDefinition = "VARCHAR")
+    private String isFrame;
+
+    /**
+     *是否可见
+     */
+    @Column(name = "is_hidden",columnDefinition = "VARCHAR")
+    private String isHidden;
 
     public String getName() {
         return this.name;
@@ -237,5 +249,21 @@ public class SysMenu extends BaseModel implements CreateListenable, UpdateListen
     @Override
     public void setUpdatedTime(Date updatedTime) {
         this.updatedTime = updatedTime;
+    }
+
+    public String getIsFrame() {
+        return isFrame;
+    }
+
+    public void setIsFrame(String isFrame) {
+        this.isFrame = isFrame;
+    }
+
+    public String getIsHidden() {
+        return isHidden;
+    }
+
+    public void setIsHidden(String isHidden) {
+        this.isHidden = isHidden;
     }
 }

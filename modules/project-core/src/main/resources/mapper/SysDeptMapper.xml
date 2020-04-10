@@ -6,7 +6,9 @@
 
     <sql id="findDtoSql">
         select * from (
-        select * from  sys_dept temp
+        select *,
+         (select name from sys_user where id=temp.leader_id) leaderName
+         from  sys_dept temp
         ) t
     </sql>
 
@@ -30,6 +32,7 @@
             <if test="name != '' and name != null">
                 and upper(t.name) like CONCAT('%',upper(#{name}),'%')
             </if>
+            order by t.sort asc
         </where>
     </select>
 

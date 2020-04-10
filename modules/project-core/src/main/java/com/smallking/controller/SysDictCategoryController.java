@@ -67,11 +67,12 @@ public class SysDictCategoryController {
      * @throws Exception
      */
     @GetMapping(value = "")
-    public Return<IPage> search(Query<SysDictCategoryDTO> query) throws Exception{
+    public Return search(Query<SysDictCategoryDTO> query) throws Exception{
         SysDictCategoryDTO sysUserDTO = (SysDictCategoryDTO) query.getBean(SysDictCategoryDTO.class);
         Page pageable = query.getPageable();
+        pageable.setSize(9999);
         IPage page = sysDictCategoryService.findSysDictCategoryPage(pageable, sysUserDTO);
-        return Return.ok(page);
+        return Return.page(page);
     }
 
 }

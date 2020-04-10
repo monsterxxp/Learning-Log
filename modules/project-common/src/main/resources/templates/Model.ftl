@@ -24,20 +24,20 @@ public class ${table_name} extends BaseModel implements CreateListenable, Update
     /**
     *${model.columnComment!}
     */
-    <#if (model.columnType = 'varchar' || model.columnType = 'text')>
+    <#if (model.columnType = 'VARCHAR' || model.columnType = 'TEXT')>
     @Column(name = "${model.columnName}",columnDefinition = "VARCHAR")
     private String ${model.changeColumnName?uncap_first};
 
     </#if>
-    <#if model.columnType = 'timestamp' >
+    <#if model.columnType = 'TIMESTAMP' >
     @Column(name = "${model.columnName}",columnDefinition = "TIMESTAMP")
     private Date ${model.changeColumnName?uncap_first};
 
     </#if>
 
-    <#if model.columnType = 'numeric' >
-    @Column(name = "${model.columnName}",columnDefinition = "DECIMAL")
-    private Float ${model.changeColumnName?uncap_first};
+    <#if model.columnType = 'INT' >
+    @Column(name = "${model.columnName}",columnDefinition = "INT")
+    private Integer ${model.changeColumnName?uncap_first};
 
     </#if>
         </#list>
@@ -45,7 +45,7 @@ public class ${table_name} extends BaseModel implements CreateListenable, Update
 
 <#if model_column?exists>
 <#list model_column as model>
-<#if (model.columnType = 'varchar' || model.columnType = 'text')>
+<#if (model.columnType = 'VARCHAR' || model.columnType = 'TEXT')>
     public String get${model.changeColumnName}() {
         return this.${model.changeColumnName?uncap_first};
     }
@@ -55,7 +55,7 @@ public class ${table_name} extends BaseModel implements CreateListenable, Update
     }
 
 </#if>
-<#if model.columnType = 'timestamp' >
+<#if model.columnType = 'TIMESTAMP' >
     public Date get${model.changeColumnName}() {
         return this.${model.changeColumnName?uncap_first};
     }
@@ -66,12 +66,12 @@ public class ${table_name} extends BaseModel implements CreateListenable, Update
 
 </#if>
 
-    <#if model.columnType = 'numeric' >
-    public Float get${model.changeColumnName}() {
+    <#if model.columnType = 'INT' >
+    public Integer get${model.changeColumnName}() {
     return this.${model.changeColumnName?uncap_first};
     }
 
-    public void set${model.changeColumnName}(Float ${model.changeColumnName?uncap_first}) {
+    public void set${model.changeColumnName}(Integer ${model.changeColumnName?uncap_first}) {
     this.${model.changeColumnName?uncap_first} = ${model.changeColumnName?uncap_first};
     }
 
