@@ -24,17 +24,17 @@ public class GlobalExceptionHandle{
 
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     @ExceptionHandler({BizException.class})
-    public ErrorMessage handleBusinessException(BizException ex) throws IOException {
+    public Return handleBusinessException(BizException ex) throws IOException {
         logger.error(ex.getMessage(), ex);
         int errorCode = HttpStatus.BAD_REQUEST.value();
-        return new ErrorMessage(errorCode, ex.getMessage());
+        return Return.error(errorCode, ex.getMessage());
     }
 
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     @ExceptionHandler({Exception.class})
-    public ErrorMessage handleBusinessException(Exception ex) throws IOException {
+    public Return handleBusinessException(Exception ex) throws IOException {
         logger.error(ex.getMessage(), ex);
         int errorCode = HttpStatus.BAD_REQUEST.value();
-        return new ErrorMessage(errorCode, "系统错误");
+        return Return.error(errorCode, "系统错误");
     }
 }

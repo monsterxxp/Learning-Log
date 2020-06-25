@@ -11,6 +11,6 @@ import com.smallking.model.SysParameter;
 @Repository
 public interface SysParameterRepository extends JpaRepository<SysParameter, String> {
 
-
+    SysParameter findByConfigKey(String configKey);
 
 }

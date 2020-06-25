@@ -13,6 +13,8 @@ import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.smallking.listener.DeleteListenable;
 
+import java.util.List;
+
 /**
 * 描述：参数配置 服务实现层
 * @author WangShaoXiong
@@ -62,6 +64,16 @@ public class SysParameterServiceImpl implements ISysParameterService {
     @Override
     public void deleteById(String id) throws Exception {
         sysParameterRepository.deleteById(id);
+    }
+
+    @Override
+    public void batchBulk(List<String> ids) throws Exception {
+        sysParameterDAO.deleteBatchIds(ids);
+    }
+
+    @Override
+    public SysParameter getValueByKey(String configKey) {
+        return sysParameterRepository.findByConfigKey(configKey);
     }
 
 }

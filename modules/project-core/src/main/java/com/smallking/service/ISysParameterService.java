@@ -3,6 +3,9 @@ package com.smallking.service;
 import com.smallking.dto.SysParameterDTO;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.smallking.model.SysParameter;
+
+import java.util.List;
 
 /**
 * 描述：参数配置 服务实现层接口
@@ -25,4 +28,7 @@ public interface ISysParameterService {
 
     void deleteById(String id) throws Exception;
 
+    void batchBulk(List<String> ids) throws Exception;
+
+    SysParameter getValueByKey(String configKey);
 }

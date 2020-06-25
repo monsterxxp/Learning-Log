@@ -21,8 +21,8 @@ public class SysParameter extends BaseModel {
     /**
     *
     */
-    @Column(name = "key",columnDefinition = "VARCHAR")
-    private String key;
+    @Column(name = "config_key",columnDefinition = "VARCHAR")
+    private String configKey;
 
 
     /**
@@ -35,8 +35,8 @@ public class SysParameter extends BaseModel {
     /**
     *
     */
-    @Column(name = "value",columnDefinition = "VARCHAR")
-    private String value;
+    @Column(name = "config_value ",columnDefinition = "VARCHAR")
+    private String configValue;
 
 
     /**
@@ -59,12 +59,20 @@ public class SysParameter extends BaseModel {
     @Column(name = "remark",columnDefinition = "VARCHAR")
     private String remark;
 
-    public String getKey() {
-        return this.key;
+    public String getConfigKey() {
+        return configKey;
     }
 
-    public void setKey(String key) {
-        this.key = key;
+    public void setConfigKey(String configKey) {
+        this.configKey = configKey;
+    }
+
+    public String getConfigValue() {
+        return configValue;
+    }
+
+    public void setConfigValue(String configValue) {
+        this.configValue = configValue;
     }
 
     public String getName() {
@@ -73,14 +81,6 @@ public class SysParameter extends BaseModel {
 
     public void setName(String name) {
         this.name = name;
-    }
-
-    public String getValue() {
-        return this.value;
-    }
-
-    public void setValue(String value) {
-        this.value = value;
     }
 
     public String getDisplayType() {

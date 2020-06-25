@@ -16,6 +16,7 @@ import com.smallking.listener.DeleteListenable;
 import com.smallking.model.*;
 import com.smallking.dto.SysUserDTO;
 import com.smallking.service.ISysMenuService;
+import com.smallking.service.ISysParameterService;
 import com.smallking.service.ISysRoleRelationService;
 import com.smallking.service.ISysUserService;
 import com.smallking.repository.SysUserRepository;
@@ -56,6 +57,11 @@ public class SysUserServiceImpl implements ISysUserService {
     @Autowired
     private ISysRoleRelationService sysRoleRelationService;
 
+    @Autowired
+    private ISysParameterService sysParameterService;
+
+    private static String DEFAULT_PASSWORD = "system.user.default.password";
+
     @Override
     public SysUserDTO findByAccount(String account) {
         return sysUserDAO.findByAccount(account);
@@ -74,8 +80,8 @@ public class SysUserServiceImpl implements ISysUserService {
         }
         SysUser sysUser = new SysUser();
         BeanUtils.copyProperties(sysUser, sysUserDTO);
-        String defaultPassword = "111111";
-        defaultPassword = DigestUtil.md5Hex(defaultPassword);
+        SysParameter pwdConfig = sysParameterService.getValueByKey(DEFAULT_PASSWORD);
+        String defaultPassword = DigestUtil.md5Hex(pwdConfig.getConfigValue());
         //生成盐值
         String salt = RandomUtil.simpleUUID();
         ByteSource credentialsSalt = ByteSource.Util.bytes(salt);
@@ -175,6 +181,14 @@ public class SysUserServiceImpl implements ISysUserService {
         BeanUtils.copyProperties(sysUserInfo, user);
         SysRoleDTO sysRoleDTO = new SysRoleDTO();
         sysRoleDTO.setId("1");
+
+        List<JSONObject> permissions = new ArrayList<>();
+        JSONObject permission = new JSONObject();
+        permission.put("id", "123213");
+        permissions.add(permission);
+        sysRoleDTO.setPermissions(permissions);
+
+        sysUserInfo.setRole(sysRoleDTO);
         // 获取菜单权限信息
         List<SysMenuDTO> menuList =  sysMenuService.findMenuByUserId(user.getId());
         return sysUserInfo;
@@ -187,17 +201,17 @@ public class SysUserServiceImpl implements ISysUserService {
         List<SysMenuDTO> menus = sysMenuService.findMenuByUserId(user.getId());
         List<SysMenuDTO> rootMenus = menus.stream().filter(e -> "0".equals(e.getParentId())).collect(Collectors.toList());
         JSONArray indexChild = initMenu(rootMenus, menus);
-        JSONObject index = new JSONObject();
-        index.put("title", "首页");
-        index.put("key", "");
-        index.put("name", "index");
-        index.put("component", "BasicLayout");
-        index.put("redirect", "/dashboard/workplace");
-        index.put("children", indexChild);
-
-        JSONArray menuData = new JSONArray();
-        menuData.add(index);
-        return menuData;
+//        JSONObject index = new JSONObject();
+//        index.put("title", "首页");
+//        index.put("key", "");
+//        index.put("name", "index");
+//        index.put("component", "BasicLayout");
+//        index.put("redirect", "/dashboard/workplace");
+//        index.put("children", indexChild);
+//
+//        JSONArray menuData = new JSONArray();
+//        menuData.add(index);
+        return indexChild;
     }
 
     private JSONArray initMenu(List<SysMenuDTO> rootMenus, List<SysMenuDTO> menus) {
@@ -221,10 +235,12 @@ public class SysUserServiceImpl implements ISysUserService {
                 if ("1".equals(sysMenuDTO.getIsFrame())) {
                     jsonObject.put("target", "_blank");
                 }
+            }
+            if ("1".equals(sysMenuDTO.getMenuType())) {
                 if ("1".equals(sysMenuDTO.getIsHidden())) {
-                    jsonObject.put("show", true);
+                    jsonObject.put("alwaysShow", true);
                 } else {
-                    jsonObject.put("show", false);
+                    jsonObject.put("alwaysShow", false);
                 }
             }
             // 获取子菜单

@@ -27,7 +27,7 @@ import java.util.List;
  **/
 @Api(value = "用户认证")
 @Controller
-//@RequestMapping("/auth")
+@RequestMapping("/auth")
 public class AuthController {
 
     @Autowired
@@ -52,16 +52,16 @@ public class AuthController {
             return Return.ok(userInfo);
         } catch (UnknownAccountException e) {
             usernamePasswordToken.clear();
-            throw new BizException("验证未通过,用户不存在");
+            throw new BizException("登录失败：用户不存在");
         } catch (LockedAccountException lae) {
             usernamePasswordToken.clear();
-            throw new BizException("验证未通过,账户已锁定");
+            throw new BizException("登录失败：账户已锁定");
         } catch (ExcessiveAttemptsException e) {
             usernamePasswordToken.clear();
-            throw new BizException("验证未通过,错误次数过多");
+            throw new BizException("登录失败：错误次数过多");
         } catch (AuthenticationException e) {
             usernamePasswordToken.clear();
-            throw new BizException("密码错误");
+            throw new BizException("登录失败：密码错误");
         }
     }
 

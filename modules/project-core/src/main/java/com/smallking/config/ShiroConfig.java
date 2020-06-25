@@ -166,8 +166,6 @@ public class ShiroConfig  {
     @Bean(name = "shiroFilter")
     public ShiroFilterFactoryBean shiroFilterFactoryBean(SecurityManager securityManager) {
         ShiroFilterFactoryBean shiroFilterFactoryBean = new ShiroFilterFactoryBean();
-        Map<String, Filter> map = shiroFilterFactoryBean.getFilters();
-        map.put("authc", new ShiroFormAuthenticationFilter());
         // 设置securityManager
         shiroFilterFactoryBean.setSecurityManager(securityManager);
         LinkedHashMap<String, String> filterChainDefinitionMap = new LinkedHashMap<>();
@@ -176,10 +174,16 @@ public class ShiroConfig  {
         filterChainDefinitionMap.put("/css/**","anon");
         filterChainDefinitionMap.put("/fonts/**","anon");
         filterChainDefinitionMap.put("/img/**","anon");
-        filterChainDefinitionMap.put("/login", "anon");
-        filterChainDefinitionMap.put("/logout", "logout");
+        filterChainDefinitionMap.put("/auth/login", "anon");
+        filterChainDefinitionMap.put("/webSocket", "anon");
+//        filterChainDefinitionMap.put("/auth/logout", "logout");
+        filterChainDefinitionMap.put("/","anon");
+        filterChainDefinitionMap.put("/auth/*","anon");
         filterChainDefinitionMap.put("/**", "authc");
 
+        LinkedHashMap<String, Filter> filtsMap=new LinkedHashMap<String, Filter>();
+        filtsMap.put("authc",new ShiroFormAuthenticationFilter() );
+        shiroFilterFactoryBean.setFilters(filtsMap);
 
         shiroFilterFactoryBean.setFilterChainDefinitionMap(filterChainDefinitionMap);
         return shiroFilterFactoryBean;

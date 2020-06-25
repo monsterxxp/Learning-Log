@@ -15,7 +15,7 @@ public class Return<T> implements Serializable {
 
     private static final long serialVersionUID = 5203201995827748690L;
 
-    private T result;
+    private T data;
     private boolean success;
     private int code;
     private String message;
@@ -28,8 +28,8 @@ public class Return<T> implements Serializable {
         this.message = message;
     }
 
-    private Return(T result, boolean success, int code, String message) {
-        this.result = result;
+    private Return(T data, boolean success, int code, String message) {
+        this.data = data;
         this.success = success;
         this.code = code;
         this.message = message;
@@ -83,12 +83,12 @@ public class Return<T> implements Serializable {
         return new Return<T>(false, code, message);
     }
 
-    public T getResult() {
-        return result;
+    public T getData() {
+        return data;
     }
 
-    public void setResult(T result) {
-        this.result = result;
+    public void setData(T data) {
+        this.data = data;
     }
 
     public boolean isSuccess() {
